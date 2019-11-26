@@ -27,6 +27,21 @@ class DB
     {
         $database = null;
     }
+
+    //Add to the database
+    function add($table, $attributes)
+    {
+        $database = $this->DBConnect();
+        
+        $tempKeys = implode(",", array_keys($attributes));
+        $tempValues = implode("','", array_values($attributes));
+
+        $database->query("INSERT INTO $table ($tempKeys) VALUES ('$tempValues')");
+        var_dump("INSERT INTO $table ($tempKeys) VALUES ('$tempValues')");
+
+        $this->DBDisconnect($database);
+    }
+
 }
 
 ?>
