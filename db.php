@@ -42,6 +42,23 @@ class DB
         $this->DBDisconnect($database);
     }
 
+    //Delete from the database
+    function delete($table, $attributes)
+    {
+        $database = $this->DBConnect();
+
+        $tempKeys = array_keys($attributes)[0];
+        $tempValues = array_values($attributes)[0];
+
+        var_dump($tempKeys);
+
+        $database->query("DELETE FROM $table WHERE $tempKeys = '$tempValues'");
+        var_dump("DELETE FROM $table WHERE $tempKeys = '$tempValues'");
+
+        $this->DBDisconnect($database);
+    }
+
+
 }
 
 ?>
