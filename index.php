@@ -48,6 +48,20 @@ if(!empty($_POST))
             echo "Account created! Try login in with your credentials!";
         }
     }
+    //LOG IN FORM
+    else if(isset($_POST['log_in']))
+    {
+        $user = login_check($_POST['log_in']['email'], hash('sha256', $_POST['log_in']['password']));
+        if($user)
+        {
+            $_SESSION['logged_in'] = true;
+            $_SESSION['user'] = $user;
+        }
+        else 
+        {
+            echo 'Wrong username/password!';
+        }
+    }
 }
 
 $logged_in = $_SESSION['logged_in'] ?? false;
