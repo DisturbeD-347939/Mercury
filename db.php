@@ -11,6 +11,17 @@ class DB
     private $charset        = 'utf8mb4';
     private $dsn;
 
+    function DBConnect()
+    {
+        $this->dsn = "mysql:host=$this->host;port=$this->port;dbname=$this->db;charset=$this->charset";
+
+        $pdo = new PDO($this->dsn, $this->username, $this->password, [
+            PDO::ATTR_ERRMODE               => PDO::ERRMODE_EXCEPTION, //Prevent malfunctioning (throws exceptions when needed)
+            PDO::ATTR_DEFAULT_FETCH_MODE    => PDO::FETCH_ASSOC, //Makes the data easier to fetch from the database
+        ]);
+    
+        return $pdo;
+    }
 
 }
 
