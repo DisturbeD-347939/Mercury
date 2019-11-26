@@ -19,6 +19,8 @@ if(!empty($_POST))
         if($result[0])
         {
             $_SESSION['id'] = $result[1];
+            mkdir("./Users/" . $result[1]);
+            copy('https://i.imgur.com/mCHMpLT.png?3', './Users/' . $result[1] . '/profilePicture.png');
             echo "Account created, log in with your details above!";
             include 'login_form.html';
         }
