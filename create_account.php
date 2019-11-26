@@ -15,8 +15,10 @@ if(!empty($_POST))
     $register['password'] = hash('sha256', $register['password']);
     if(!$db->repeated($register))
     {
-        if($db->add("users", $register))
+        $result = $db->add("users", $register);
+        if($result[0])
         {
+            $_SESSION['id'] = $result[1];
             echo "Account created, log in with your details above!";
             include 'login_form.html';
         }
