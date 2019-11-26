@@ -58,7 +58,25 @@ class DB
         return $result;
     }
 
+    function repeated($data)
+    {
+        $database = $this->DBConnect();
+
+        $found = [];
+        foreach($data as $k => $v)
+        {
+            $result = $database->query("SELECT * FROM users WHERE $k='$v'");
+            if ($result->rowCount()) 
+            {
+                if($k == "username" || $k == "email")
+                {
+                    array_push($found, $k);
+                }
+            }
+        }
+
         $this->DBDisconnect($database);
+        return $found;
     }
 
 
