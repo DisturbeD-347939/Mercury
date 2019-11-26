@@ -62,6 +62,15 @@ if(!empty($_POST))
             echo 'Wrong username/password!';
         }
     }
+    //DELETE USER IN PROGRESS
+    else if(isset($_POST['delete_user']))
+    {
+        $path = "id/" . $_POST['delete_user']['id'];
+        if(file_exists($path))
+        {
+            remove_user($_POST['delete_user']['id'], $path);
+        }
+    }
 }
 
 $logged_in = $_SESSION['logged_in'] ?? false;
