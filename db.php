@@ -23,6 +23,10 @@ class DB
         return $pdo;
     }
 
+    function DBDisconnect($database)
+    {
+        $database = null;
+    }
 }
 
 ?>
