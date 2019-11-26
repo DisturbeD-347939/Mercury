@@ -1,0 +1,6 @@
+dir_to_ignore/
+*.png
+*.jpg
+*.gif
+*.map
+*.scss
