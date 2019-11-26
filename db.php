@@ -79,7 +79,24 @@ class DB
         return $found;
     }
 
+    function login($email, $password)
+    {
+        $database = $this->DBConnect();
 
+        $result = $database->query("SELECT * FROM users WHERE email='$email' AND PASSWORD='$password'");
+
+        var_dump($result->rowCount());
+        if ($result->rowCount()) 
+        {
+            $this->DBDisconnect($database);
+            return [1,$result->fetch()];
+        }
+        else
+        {
+            $this->DBDisconnect($database);
+            return [0];
+        }
+    }
 }
 
 ?>
