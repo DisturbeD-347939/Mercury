@@ -16,6 +16,7 @@ if(!empty($_POST))
     {
         $_SESSION['user'] = $result[1];
         $_SESSION['login'] = true;
+        include 'profile.html';
     }
     else
     {
