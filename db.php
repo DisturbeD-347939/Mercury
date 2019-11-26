@@ -51,10 +51,12 @@ class DB
         $tempKeys = array_keys($attributes)[0];
         $tempValues = array_values($attributes)[0];
 
-        var_dump($tempKeys);
+        $result = $database->query("DELETE FROM $table WHERE $tempKeys = '$tempValues'");
+        //var_dump("DELETE FROM $table WHERE $tempKeys = '$tempValues'");
 
-        $database->query("DELETE FROM $table WHERE $tempKeys = '$tempValues'");
-        var_dump("DELETE FROM $table WHERE $tempKeys = '$tempValues'");
+        $this->DBDisconnect($database);
+        return $result;
+    }
 
         $this->DBDisconnect($database);
     }
