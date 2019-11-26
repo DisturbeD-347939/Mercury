@@ -39,8 +39,10 @@ class DB
         $result = $database->query("INSERT INTO $table ($tempKeys) VALUES ('$tempValues')");
         //var_dump("INSERT INTO $table ($tempKeys) VALUES ('$tempValues')");
 
+        $id = $database->lastInsertId();
+
         $this->DBDisconnect($database);
-        return $result;
+        return [$result, $id];
     }
 
     //Delete from the database
@@ -85,7 +87,6 @@ class DB
 
         $result = $database->query("SELECT * FROM users WHERE email='$email' AND PASSWORD='$password'");
 
-        var_dump($result->rowCount());
         if ($result->rowCount()) 
         {
             $this->DBDisconnect($database);
