@@ -1,7 +1,9 @@
 <?php
 
 @session_start();
-$_SESSION;
+
+include_once 'db.php';
+$db = new DB;
 
 include 'index.html';
 
