@@ -1,3 +1,17 @@
+<?php
+
+if(!session_id())
+{
+    @session_start();
+}
+
+include_once 'db.php';
+$db = new DB;
+
+$result = $db->getPosts($_SESSION["user"]["id"]);
+$result[1] = array_reverse($result[1]);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,9 +41,26 @@
 
     <h2>Posts</h2>
     <form action="create_post.php" method="POST" id="postForm">
+        <p>Title</p>
+        <input type="text" name ="title" required>
+        <p>Text</p>
         <textarea name="content" form="postForm" required></textarea>
+        <p></p>
         <input type="submit" value="Post!">
     </form>
+    <?php
+    if($result[0])
+    {
+        foreach($result[1] as $k => $v)
+        {?>
+        <hr>
+        <div>
+            <h3><?php echo($v["title"])?></h3>
+            <p><?php echo($v["content"]); ?></p>
+        </div>
+    <?php
+    }
+        }?>
 
 </body>
 
