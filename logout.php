@@ -2,10 +2,11 @@
 
 if(!session_id())
 {
-    session_start();
+    @session_start();
 }
 
-$_SESSION['login'] = false;
+session_unset();
+session_destroy();
 include 'index.html';
 
 ?>
