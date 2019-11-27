@@ -24,7 +24,8 @@ $result[1] = array_reverse($result[1]);
 </head>
 
 <body>
-
+    <input type="text" onkeyup="showHint(this.value)">
+    <p id="txtHint"></p>
     <img id="profilePic" src="Users/<?php echo $_SESSION['user']['id']?>/profilePicture.png">
     <h1>This is your profile <?php echo $_SESSION['user']['first_name'] ?></h1>
     <p>Enjoy your homepage!
@@ -65,3 +66,27 @@ $result[1] = array_reverse($result[1]);
 </body>
 
 </html>
+
+<script>
+function showHint(str)
+{
+    if(str.length == 0)
+    {
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    }
+    else
+    {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() 
+        {
+            if (this.readyState == 4 && this.status == 200) 
+            {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "getProfiles.php?q=" + str, true);
+        xmlhttp.send();
+    }
+}
+</script>
