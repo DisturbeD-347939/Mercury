@@ -45,6 +45,16 @@ class DB
         return [$result, $id];
     }
 
+    function getNames($id)
+    {
+        $database = $this->DBConnect();
+
+        $result = $database->query("SELECT first_name, surname, username FROM users WHERE id != $id");
+
+        $this->DBDisconnect($database);
+        return $result->fetchAll();
+    }
+
     //Delete from the database
     function delete($table, $attributes)
     {
