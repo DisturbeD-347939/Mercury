@@ -60,6 +60,24 @@ class DB
         return $result;
     }
 
+    function getPosts($userID)
+    {
+        $database = $this->DBConnect();
+
+        $result = $database->query("SELECT * FROM posts WHERE userID='$userID'");
+
+        if ($result->rowCount()) 
+        {
+            $this->DBDisconnect($database);
+            return [1,$result->fetchAll()];
+        }
+        else
+        {
+            $this->DBDisconnect($database);
+            return [0];
+        }
+    }
+
     function repeated($data)
     {
         $database = $this->DBConnect();
