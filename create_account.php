@@ -1,13 +1,12 @@
 <?php
 
-include 'db.php';
-
-$db = new DB;
-
 if(!session_id())
 {
     @session_start();
 }
+
+include_once 'db.php';
+$db = new DB;
 
 if(!empty($_POST))
 {
@@ -22,7 +21,8 @@ if(!empty($_POST))
             mkdir("./Users/" . $result[1]);
             copy('https://i.imgur.com/mCHMpLT.png?3', './Users/' . $result[1] . '/profilePicture.png');
             echo "Account created, log in with your details above!";
-            include 'login_form.html';
+            $_POST = array();
+            include 'login_form.php';
         }
         else
         {
@@ -37,7 +37,7 @@ if(!empty($_POST))
 }
 else
 {
-    include 'create_account.php';
+    include 'create_account.html';
 }
 
 
