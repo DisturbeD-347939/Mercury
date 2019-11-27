@@ -2,7 +2,7 @@
 
 if(!session_id())
 {
-    session_start();
+    @session_start();
 }
 
 $upload = 1;
