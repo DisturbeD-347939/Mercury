@@ -38,7 +38,7 @@ if ($upload != 0)
     }
     else
     {
-        include 'profile.html';
+        header('Location: profile.php');
     }
 }
 
