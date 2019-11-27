@@ -22,11 +22,14 @@
     </form>
 
     <p>
-    <?php if($user["username"] == "admin") : ?>
-        <a href="delete_user.php">Delete user</a>
-        <p>
-    <?php endif ?>
-    <a href="logout.php">Log out</a>
+    <a href="delete_account.php">Delete account</a>
+    <button onclick="window.location.href='logout.php'">Log out</button>
+
+    <h2>Posts</h2>
+    <form action="create_post.php" method="POST" id="postForm">
+        <textarea name="content" form="postForm" required></textarea>
+        <input type="submit" value="Post!">
+    </form>
 
 </body>
 
