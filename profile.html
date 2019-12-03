@@ -9,7 +9,11 @@ include_once 'db.php';
 $db = new DB;
 
 $result = $db->getPosts($_SESSION["user"]["id"]);
-$result[1] = array_reverse($result[1]);
+if(@$result[1])
+{
+    $result[1] = array_reverse($result[1]);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +24,8 @@ $result[1] = array_reverse($result[1]);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="profile.js"></script>
     <title><?php echo $_SESSION['user']['username']?></title>
 </head>
 
@@ -49,44 +55,59 @@ $result[1] = array_reverse($result[1]);
         <p></p>
         <input type="submit" value="Post!">
     </form>
-    <?php
-    if($result[0])
-    {
-        foreach($result[1] as $k => $v)
-        {?>
-        <hr>
-        <div>
-            <h3><?php echo($v["title"])?></h3>
-            <p><?php echo($v["content"]); ?></p>
-        </div>
-    <?php
-    }
-        }?>
-
+    <div id="posts">
+        
+    </div>
 </body>
 
 </html>
 
 <script>
-function showHint(str)
-{
-    if(str.length == 0)
+    var posts = <?php echo json_encode($result) ?>;
+
+    setTimeout(createPosts(posts), 0);
+
+    function createPosts(posts)
     {
-        document.getElementById("txtHint").innerHTML = "";
-        return;
+        for(var i = 0; i < posts[1].length; i++)
+        {
+            $("#posts").append("<div id=" + posts[1][i].id + "><hr><h3>" + posts[1][i].title + "</h3><p>" + posts[1][i].content + "</p><button onclick='deletePost(" + posts[1][i].id + ")'>Delete post</button></div>");
+        }
     }
-    else
+
+    function showHint(str)
     {
         var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() 
+        if(str.length == 0)
         {
-            if (this.readyState == 4 && this.status == 200) 
+            document.getElementById("txtHint").innerHTML = "";
+            return;
+        }
+        else
+        {
+            xmlhttp.onreadystatechange = function() 
             {
-                document.getElementById("txtHint").innerHTML = this.responseText;
+                if (this.readyState == 4 && this.status == 200) 
+                {
+                    document.getElementById("txtHint").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "requests.php?search=" + str, true);
+            xmlhttp.send();
+        }
+    }
+
+    function deletePost(id)
+    {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function()
+        { // Call a function when the state changes.
+            if (this.readyState === xmlhttp.DONE && this.status === 200) 
+            {
+                $("#" + id).hide();
             }
-        };
-        xmlhttp.open("GET", "getProfiles.php?q=" + str, true);
+        }
+        xmlhttp.open("GET", "requests.php?del=" + id, true);
         xmlhttp.send();
     }
-}
 </script>
