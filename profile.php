@@ -6,6 +6,6 @@ if(!session_id())
 
 }
 
-include "profile.html";
+include_once "profile.html";
 
 ?>
