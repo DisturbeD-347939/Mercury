@@ -4,3 +4,4 @@ dir_to_ignore/
 *.gif
 *.map
 *.scss
+debug.txt
