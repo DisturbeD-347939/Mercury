@@ -9,10 +9,6 @@ include_once 'db.php';
 $db = new DB;
 
 $result = $db->getPosts($_SESSION["user"]["id"]);
-if(@$result[1])
-{
-    $result[1] = array_reverse($result[1]);
-}
 
 ?>
 
@@ -25,7 +21,6 @@ if(@$result[1])
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="profile.js"></script>
     <title><?php echo $_SESSION['user']['username']?></title>
 </head>
 
