@@ -101,10 +101,11 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
 
     function showHint(str)
     {
+        $("#hints").empty();
         var xmlhttp = new XMLHttpRequest();
         if(str.length == 0)
         {
-            document.getElementById("txtHint").innerHTML = "";
+            $("#txtHint").text = "";
             return;
         }
         else
