@@ -80,6 +80,25 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
         }
     }
 
+    $('#postForm').submit(function(e)
+    {
+        console.log("here");
+        e.preventDefault();
+        $.ajax
+        ({
+            type: "POST",
+            url: "requests.php",
+            data: $(this).serialize(),
+            success: function(response)
+            {
+                var jsonResponse = JSON.parse(response);
+                posts = jsonResponse["result"];
+                console.log(posts);
+                displayPosts();
+            }
+        })
+    });
+
     function showHint(str)
     {
         var xmlhttp = new XMLHttpRequest();
