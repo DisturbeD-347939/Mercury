@@ -48,12 +48,12 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
     <a href="delete_account.php">Delete account</a>
     <button onclick="window.location.href='logout.php'">Log out</button>
 
-    <h2>Posts</h2>
-    <form action="create_post.php" method="POST" id="postForm">
+    <h2>Create a post!</h2>
+    <form method="post" id="postForm">
         <p>Title</p>
-        <input type="text" name ="title" required>
+        <input type="text" name="title" required>
         <p>Text</p>
-        <textarea name="content" form="postForm" required></textarea>
+        <textarea name="content" required></textarea>
         <p></p>
         <input type="submit" value="Post!">
     </form>
@@ -65,6 +65,7 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
 </html>
 
 <script>
+
     var posts = <?php echo json_encode($result) ?>;
 
     setTimeout(createPosts(posts), 0);
