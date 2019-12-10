@@ -25,7 +25,14 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
 </head>
 
 <body>
-    <input type="text" onkeyup="showHint(this.value)">
+    <header>
+        <img src="images/logo.png">
+        <div id="searchBox">
+            <input type="text" onkeyup="showHint(this.value)" placeholder="Search a profile...">
+            <div id="hints"></div>
+        </div>
+    </header>
+
     <p id="txtHint"></p>
     <img id="profilePic" src="Users/<?php echo $_SESSION['user']['id']?>/profilePicture.png">
     <h1>This is your profile <?php echo $_SESSION['user']['first_name'] ?></h1>
