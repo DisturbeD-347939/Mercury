@@ -114,7 +114,24 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
             {
                 if (this.readyState == 4 && this.status == 200) 
                 {
-                    document.getElementById("txtHint").innerHTML = this.responseText;
+                    var hints = this.responseText.split(',');
+                    for(var i = 0; i < hints.length; i++)
+                    {
+                        var splitHint = hints[i].split(" ");
+                        //Removes bugged space
+                        if(splitHint.length > 4)
+                        {
+                            splitHint.splice(0,1);
+                        }
+                        if(splitHint[0])
+                        {
+                            $('#hints').append("<div id=" + splitHint[3] + " class='searches' <h1>" + splitHint[0] + " " + splitHint[1] + "</h1><p>" + splitHint[2] + "</p>");
+                        }
+                    }
+                    if(!$('#hints > div').length)
+                    {
+                        $('#hints').append("<div class='searches'><p>No profiles found...</p></div>")
+                    }
                 }
             };
             xmlhttp.open("GET", "requests.php?search=" + str, true);
