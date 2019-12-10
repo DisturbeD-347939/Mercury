@@ -8,15 +8,13 @@ if(!session_id())
 include_once 'db.php';
 $db = new DB;
 
-$q = $_REQUEST;
-
-if($q['search'])
+if(@$_REQUEST["search"])
 {
     $names = [];
     $getNames = $db->getNames($_SESSION["user"]["id"]);
     foreach($getNames as $k => $v)
     {
-        array_push($names, $v["first_name"] . " " . $v["surname"] . " @" . $v["username"]);
+        array_push($names, $v["first_name"] . " " . $v["surname"] . " @" . $v["username"] . " " . $v["id"]);
     }
 
     $q = $_REQUEST["search"];
@@ -44,7 +42,7 @@ if($q['search'])
 
     echo $hint;
 }
-else if($q['del'])
+else if(@$_REQUEST["del"])
 {
     $q = $_REQUEST['del'];
     
