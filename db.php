@@ -49,7 +49,7 @@ class DB
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT first_name, surname, username FROM users WHERE id != $id");
+        $result = $database->query("SELECT first_name, surname, username, id FROM users WHERE id != $id");
 
         $this->DBDisconnect($database);
         return $result->fetchAll();
