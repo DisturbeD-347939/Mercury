@@ -68,7 +68,7 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
 
     var posts = <?php echo json_encode($result) ?>;
 
-    setTimeout(createPosts(posts), 0);
+    displayPosts();
 
     function createPosts(posts)
     {
