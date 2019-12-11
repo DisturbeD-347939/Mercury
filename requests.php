@@ -42,17 +42,26 @@ if(@$_REQUEST["search"])
 
     echo $hint;
 }
+
 else if(@$_REQUEST["del"])
 {
     $q = $_REQUEST['del'];
     
     $result = $db->delete("posts", array("id"=> $q));
 }
+
 else if(@$_POST["title"] && $_POST["content"])
 {
     $db->add("posts", array("content"=>$_POST["content"], "title"=>$_POST["title"], "userID"=>$_SESSION["user"]["id"]));
     $result = $db->getPosts($_SESSION["user"]["id"]);
     echo json_encode(array('result' => $result));
+}
+
+else if($_REQUEST["searchProfile"])
+{
+    $result = $db->searchUser($_REQUEST["searchProfile"]);
+    var_dump($result);
+    $_SESSION["searchProfile"] = $result;
 }
 
 ?>
