@@ -22,8 +22,11 @@ header {
 #searchBox {
   position: static;
   width: 500px;
-  border: 1px solid #ddd;
   z-index: 1; }
+  #searchBox input {
+    font-size: 20px;
+    height: 30px;
+    width: 300px; }
 
 .searches {
   display: block;
@@ -31,6 +34,8 @@ header {
   background-color: grey;
   border: 2px solid black;
   padding: 5px 5px; }
+  .searches:hover {
+    background-color: white; }
 
 #hints {
   position: absolute; }
