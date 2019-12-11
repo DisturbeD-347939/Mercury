@@ -55,6 +55,16 @@ class DB
         return $result->fetchAll();
     }
 
+    function searchUser($id)
+    {
+        $database = $this->DBConnect();
+
+        $result = $database->query("SELECT * FROM users WHERE id = $id");
+
+        $this->DBDisconnect($database);
+        return $result->fetch();
+    }
+
     //Delete from the database
     function delete($table, $attributes)
     {
