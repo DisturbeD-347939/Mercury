@@ -85,7 +85,6 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
 
     $('#postForm').submit(function(e)
     {
-        console.log("here");
         e.preventDefault();
         $.ajax
         ({
@@ -96,7 +95,6 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
             {
                 var jsonResponse = JSON.parse(response);
                 posts = jsonResponse["result"];
-                console.log(posts);
                 displayPosts();
             }
         })
