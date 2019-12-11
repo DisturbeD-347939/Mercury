@@ -28,7 +28,7 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
     <header>
         <img src="images/logo.png">
         <div id="searchBox">
-            <input type="text" onkeyup="showHint(this.value)" placeholder="Search a profile...">
+            <input type="text" id="searchBoxInput" placeholder="Search a profile...">
             <div id="hints"></div>
         </div>
     </header>
