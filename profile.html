@@ -157,4 +157,10 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
         xmlhttp.open("GET", "requests.php?del=" + id, true);
         xmlhttp.send();
     }
+
+    function goToProfile(id)
+    {
+        console.log("He wants to go to " + id);
+    }
+
 </script>
