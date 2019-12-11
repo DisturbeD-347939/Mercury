@@ -1,0 +1,45 @@
+<?php
+
+include_once 'db.php';
+$db = new DB;
+
+$result = $db->getPosts($_SESSION["searchProfile"]["id"]);
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <title><?php echo $_SESSION['searchProfile']['first_name'] . " " . $_SESSION['searchProfile']['surname'] ?></title>
+</head>
+
+<body>
+    <header>
+        <img src="images/logo.png">
+        <div id="searchBox">
+            <input type="text" id="searchBoxInput" placeholder="Search a profile...">
+            <div id="hints"></div>
+        </div>
+    </header>
+
+    <p id="txtHint"></p>
+    <img id="profilePic" src="Users/<?php echo $_SESSION['searchProfile']['id']?>/profilePicture.png">
+    <h1><?php echo $_SESSION['searchProfile']['first_name'] . " " . $_SESSION['searchProfile']['surname'] ?></h1>
+    <button id="followButton" onclick="follow(<?php echo $_SESSION['searchProfile']['id'] ?>)">Follow</button>
+
+    <div id="posts"></div>
+</body>
+
+<script type="text/javascript">
+    var posts = <?= json_encode($result) ?>;
+    var searching = 1;
+</script>
+<script src="script.js"></script> 
+
+</html>
