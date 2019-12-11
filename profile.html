@@ -137,16 +137,12 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
                             $('#hints').append("<div class='searches'><p>No profiles found...</p></div>")
                         }
                     }
-                    if(!$('#hints > div').length)
-                    {
-                        $('#hints').append("<div class='searches'><p>No profiles found...</p></div>")
-                    }
-                }
-            };
-            xmlhttp.open("GET", "requests.php?search=" + str, true);
-            xmlhttp.send();
+                };
+                xmlhttp.open("GET", "requests.php?search=" + str, true);
+                xmlhttp.send();
+            }
         }
-    }
+    });
 
     function deletePost(id)
     {
