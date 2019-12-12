@@ -29,4 +29,25 @@ function setup()
         } 
     });
 }
+
+function follow()
+{
+    $.ajax
+    ({
+        type: 'GET',
+        url: 'requests.php',
+        contentType: 'application/json; charset=utf-8',
+        data: {"follow":userID},
+        dataType: 'json',
+        success: function ()
+        {
+            $('#followButton').attr("onclick", "unfollow(" + userID + ")");
+            $('#followButton').html("Unfollow");
+        },
+        error: function ()
+        {
+            console.log("Error occured");
+        } 
+    });
+}
 }
