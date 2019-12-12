@@ -2,16 +2,31 @@ setup();
 
 function setup()
 {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function()
-    { // Call a function when the state changes.
-        if (this.readyState === xmlhttp.DONE && this.status === 200) 
+    $.ajax
+    ({
+        type: 'GET',
+        url: 'requests.php',
+        contentType: 'application/json; charset=utf-8',
+        data: {"followerID":followerID, "userID":userID},
+        dataType: 'json',
+        success: function (response)
         {
-            console.log(this.response);
-        }
-    }
-    var values = [followerID, userID];
-    console.log(values);
-    xmlhttp.open("GET", "requests.php?following=" + values, true);
-    xmlhttp.send();
+            var responseJSON = JSON.parse(JSON.stringify(response));
+            if(responseJSON["result"])
+            {
+                $('#followButton').html("Unfollow");
+                $('#followButton').attr("onclick", "unfollow(" + userID + ")");
+            }
+            else
+            {
+                $('#followButton').html("Follow");
+                $('#followButton').attr("onclick", "follow(" + userID + ")");
+            }
+        },
+        error: function ()
+        {
+            console.log("Error occured");
+        } 
+    });
+}
 }
