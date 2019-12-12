@@ -38,7 +38,7 @@ $result = $db->getPosts($_SESSION["searchProfile"]["id"]);
     <p id="txtHint"></p>
     <img id="profilePic" src="Users/<?php echo $_SESSION['searchProfile']['id']?>/profilePicture.png">
     <h1><?php echo $_SESSION['searchProfile']['first_name'] . " " . $_SESSION['searchProfile']['surname'] ?></h1>
-    <button id="followButton" onclick="follow(<?php echo $_SESSION['searchProfile']['id'] ?>)">Follow</button>
+    <button id="followButton" onclick="">Follow</button>
 
     <div id="posts"></div>
 </body>
