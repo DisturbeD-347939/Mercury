@@ -140,10 +140,10 @@ class DB
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT FROM follows WHERE followerID = $followerID && userID = $userID");
+        $result = $database->query("SELECT * FROM follows WHERE followerID='$followerID' AND userID='$userID'");
 
         $this->DBDisconnect($database);
-        return $result->fetchAll();
+        return $result->fetch();
     }
 
 }

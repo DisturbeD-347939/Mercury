@@ -40,7 +40,7 @@ if(@$_REQUEST["search"])
         }
     }
 
-    echo $hint;
+    echo json_encode(array('hint'=>$hint));
 }
 
 else if(@$_REQUEST["del"])
@@ -48,35 +48,45 @@ else if(@$_REQUEST["del"])
     $q = $_REQUEST['del'];
     
     $result = $db->delete("posts", array("id"=> $q));
+
+    echo json_encode(array('result'=>$result));
 }
 
 else if(@$_POST["title"] && $_POST["content"])
 {
     $db->add("posts", array("content"=>$_POST["content"], "title"=>$_POST["title"], "userID"=>$_SESSION["user"]["id"]));
+
     $result = $db->getPosts($_SESSION["user"]["id"]);
+
     echo json_encode(array('result' => $result));
 }
 
 else if(@$_REQUEST["searchProfile"])
 {
     $result = $db->searchUser($_REQUEST["searchProfile"]);
-    var_dump($result);
+
     $_SESSION["searchProfile"] = $result;
+
+    echo json_encode(array('result'=>$result));
 }
 
 else if(@$_REQUEST["follow"])
 {
-    $result = $db->add("follows", array("followerID"=>$_REQUEST["follow"], "userID"=>$_SESSION["user"]["id"]));
+    $result = $db->add("follows", array("followerID"=>$_SESSION["user"]["id"], "userID"=>$_REQUEST["follow"]));
+
+    echo json_encode(array('result'=>$result));
 }
 
 else if(@$_REQUEST["unfollow"])
 {
-    $result = $db->delete("follows", array("followerID"=>$_REQUEST["unfollow"], "userID"=>$_SESSION["user"]["id"]));
+    $result = $db->delete("follows", array("userID"=>$_REQUEST["unfollow"], "followerID"=>$_SESSION["user"]["id"]));
+
+    echo json_encode(array('result'=>$result));
 }
 
-else if(@$_REQUEST["following"])
+else if(@$_REQUEST["followerID"] && @$_REQUEST["userID"])
 {
-    $result = $db->following($_REQUEST["following"][0], $_REQUEST["following"][1]);
+    $result = $db->following($_REQUEST["followerID"], $_REQUEST["userID"]);
 
     echo json_encode(array('result' => $result));
 }
