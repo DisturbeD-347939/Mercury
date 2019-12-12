@@ -39,7 +39,10 @@ $result = $db->getPosts($_SESSION["searchProfile"]["id"]);
 <script type="text/javascript">
     var posts = <?= json_encode($result) ?>;
     var searching = 1;
+    var userID = <?= $_SESSION["searchProfile"]["id"] ?>;
+    var followerID = <?= $_SESSION["user"]["id"] ?>
 </script>
-<script src="script.js"></script> 
+<script src="script.js"></script>
+<script src="searchProfile.js"></script> 
 
 </html>
