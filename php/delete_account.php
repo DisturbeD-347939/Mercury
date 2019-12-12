@@ -5,17 +5,17 @@ if(!session_id())
     @session_start();
 }
 
-include_once "db.php";
+include_once "../php/db.php";
 $db = new DB;
 
 if(!empty($_POST))
 {
     $db->delete("users", array("username"=>$_SESSION["user"]["username"]));
-    include "index.php";
+    include "../index.php";
 }
 else
 {
-    include "delete_account.html";
+    include "../html/delete_account.html";
 }
 
 ?>

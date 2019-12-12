@@ -6,7 +6,7 @@ if(!session_id())
 }
 
 $upload = 1;
-$targetFile = "./Users/" . $_SESSION['user']['id'] . "/" . "profilePicture.png";
+$targetFile = "../Users/" . $_SESSION['user']['id'] . "/" . "profilePicture.png";
 $imageFileType = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
 
 if(isset($_POST["submitPic"])) 
@@ -38,7 +38,7 @@ if ($upload != 0)
     }
     else
     {
-        header('Location: profile.php');
+        header('Location: ../php/profile.php');
     }
 }
 

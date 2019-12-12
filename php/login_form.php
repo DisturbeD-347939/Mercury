@@ -5,7 +5,7 @@ if(!session_id())
     @session_start();
 }
 
-include_once 'db.php';
+include_once '../php/db.php';
 $db = new DB;
 
 if(!empty($_POST))
@@ -15,17 +15,17 @@ if(!empty($_POST))
     {
         $_SESSION['user'] = $result[1];
         $_SESSION['login'] = true;
-        header('Location: profile.php');
+        header('Location: ../php/profile.php');
     }
     else
     {
         echo "Incorrect details, try again!";
-        include 'login_form.html';
+        include '../html/login_form.html';
     }
 }
 else
 {
-    include 'login_form.html';
+    include '../html/login_form.html';
 }
 
 ?>

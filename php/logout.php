@@ -7,6 +7,7 @@ if(!session_id())
 
 session_unset();
 session_destroy();
-include 'index.html';
+
+header("Location: ../index.php");
 
 ?>

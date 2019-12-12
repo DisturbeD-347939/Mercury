@@ -6,6 +6,6 @@ if(!session_id())
 
 }
 
-include_once 'searchProfile.html';
+include_once "../html/feed.html";
 
 ?>

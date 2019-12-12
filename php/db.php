@@ -146,6 +146,16 @@ class DB
         return $result->fetch();
     }
 
+    function getFollows($id)
+    {
+        $database = $this->DBConnect();
+
+        $result = $database->query("SELECT userID FROM follows WHERE followerID='$id'");
+
+        $this->DBDisconnect($database);
+        return $result->fetchAll();
+    }
+
 }
 
 ?>

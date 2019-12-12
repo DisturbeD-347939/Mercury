@@ -5,7 +5,7 @@ if(!session_id())
     @session_start();
 }
 
-include_once 'db.php';
+include_once '../php/db.php';
 $db = new DB;
 
 if(!empty($_POST))
@@ -18,11 +18,11 @@ if(!empty($_POST))
         if($result[0])
         {
             $_SESSION['id'] = $result[1];
-            mkdir("./Users/" . $result[1]);
-            copy('https://i.imgur.com/mCHMpLT.png?3', './Users/' . $result[1] . '/profilePicture.png');
+            mkdir("../Users/" . $result[1]);
+            copy('https://i.imgur.com/mCHMpLT.png?3', '../Users/' . $result[1] . '/profilePicture.png');
             echo "Account created, log in with your details above!";
             $_POST = array();
-            include 'login_form.php';
+            include '../php/login_form.php';
         }
         else
         {
@@ -32,12 +32,12 @@ if(!empty($_POST))
     else
     {
         echo "Existing!!";
-        include 'create_account.html';
+        include '../html/create_account.html';
     }
 }
 else
 {
-    include 'create_account.html';
+    include '../html/create_account.html';
 }
 
 

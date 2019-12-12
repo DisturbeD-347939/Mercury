@@ -5,7 +5,7 @@ if(!session_id())
     @session_start();
 }
 
-include_once 'db.php';
+include_once '../php/db.php';
 $db = new DB;
 
 if(@$_REQUEST["search"])

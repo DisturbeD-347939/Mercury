@@ -120,7 +120,7 @@ function goToProfile(id)
         dataType: 'json',
         success: function ()
         {
-            window.location = "searchProfile.php";
+            window.location = "../php/searchProfile.php";
         },
         error: function ()
         {

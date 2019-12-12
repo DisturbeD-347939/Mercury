@@ -6,6 +6,6 @@ if(!session_id())
 
 }
 
-include_once "feed.html";
+include_once "../html/profile.html";
 
 ?>

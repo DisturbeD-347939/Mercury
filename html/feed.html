@@ -1,9 +1,9 @@
 <?php
 
-include_once 'db.php';
+include_once '../php/db.php';
 $db = new DB;
 
-$result = $db->getPosts($_SESSION["searchProfile"]["id"]);
+$result = $db->getFollows($_SESSION["user"]["id"]);
 
 ?>
 
@@ -14,23 +14,23 @@ $result = $db->getPosts($_SESSION["searchProfile"]["id"]);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../style/style.css">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <title>Feed</title>
 </head>
 
 <body>
     <header>
-        <img src="images/logo.png">
+        <img src="../images/logo.png">
         <div id="searchBox">
             <input type="text" id="searchBoxInput" placeholder="Search a profile...">
             <div id="hints"></div>
         </div>
         <nav>
             <ul>
-                <li><a href="profile.php">Home</a></li>
-                <li><a href="feed.php">Feed</a></li>
-                <li><a href="settings.php">Settings</a></li>
+                <li><a href="../php/profile.php">Home</a></li>
+                <li><a href="../php/feed.php">Feed</a></li>
+                <li><a href="../php/settings.php">Settings</a></li>
             </ul>
         </nav>
     </header>
@@ -39,6 +39,9 @@ $result = $db->getPosts($_SESSION["searchProfile"]["id"]);
 
 </body>
 
-<script src="feed.js"></script>
+<script type="text/javascript">
+    var ids = JSON.stringify(<?= json_encode($result) ?>);
+</script>
+<script src="../js/feed.js"></script>
 
 </html>
