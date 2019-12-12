@@ -40,23 +40,28 @@ $('#postForm').submit(function(e)
 
 $('#searchBoxInput').on('keyup', function(e)
 {
-    if(e.keyCode > 46)
+        
+    var str = this.value;
+    $("#hints").empty();
+    //var xmlhttp = new XMLHttpRequest();
+    if(str.length == 0)
     {
-        var str = this.value;
-        $("#hints").empty();
-        var xmlhttp = new XMLHttpRequest();
-        if(str.length == 0)
+        $("#txtHint").text = "";
+    }
+    else
+    {
+        if(e.keyCode > 46)
         {
-            $("#txtHint").text = "";
-            return;
-        }
-        else
-        {
-            xmlhttp.onreadystatechange = function() 
-            {
-                if (this.readyState == 4 && this.status == 200) 
+            $.ajax
+            ({
+                type: 'GET',
+                url: 'requests.php',
+                contentType: 'application/json; charset=utf-8',
+                data: {"search":str},
+                dataType: 'json',
+                success: function (response)
                 {
-                    var hints = this.responseText.split(',');
+                    var hints = response["hint"].split(',');
                     for(var i = 0; i < hints.length; i++)
                     {
                         var splitHint = hints[i].split(" ");
@@ -74,10 +79,12 @@ $('#searchBoxInput').on('keyup', function(e)
                     {
                         $('#hints').append("<div class='searches'><p>No profiles found...</p></div>")
                     }
-                }
-            };
-            xmlhttp.open("GET", "requests.php?search=" + str, true);
-            xmlhttp.send();
+                },
+                error: function ()
+                {
+                    console.log("Error occured");
+                } 
+            });
         }
     }
 });
