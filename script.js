@@ -6,17 +6,14 @@ function displayPosts()
     {
         posts[1] = posts[1].reverse();
         $("#posts").empty();
-        console.log(posts[1].length);
         for(var i = 0; i < posts[1].length; i++)
         {
             if(!searching)
             {
-                console.log("here");
                 $('#posts').append("<div id=" + posts[1][i].id + "><hr><h3>" + posts[1][i].title + "</h3><p>" + posts[1][i].content + "</p><button onclick='deletePost(" + posts[1][i].id + ")'>Delete post</button></div>");
             }
             else
             {
-                console.log("here");
                 $('#posts').append("<div id=" + posts[1][i].id + "><hr><h3>" + posts[1][i].title + "</h3><p>" + posts[1][i].content + "</p></div>");
             }
         }
