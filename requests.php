@@ -57,11 +57,28 @@ else if(@$_POST["title"] && $_POST["content"])
     echo json_encode(array('result' => $result));
 }
 
-else if($_REQUEST["searchProfile"])
+else if(@$_REQUEST["searchProfile"])
 {
     $result = $db->searchUser($_REQUEST["searchProfile"]);
     var_dump($result);
     $_SESSION["searchProfile"] = $result;
+}
+
+else if(@$_REQUEST["follow"])
+{
+    $result = $db->add("follows", array("followerID"=>$_REQUEST["follow"], "userID"=>$_SESSION["user"]["id"]));
+}
+
+else if(@$_REQUEST["unfollow"])
+{
+    $result = $db->delete("follows", array("followerID"=>$_REQUEST["unfollow"], "userID"=>$_SESSION["user"]["id"]));
+}
+
+else if(@$_REQUEST["following"])
+{
+    $result = $db->following($_REQUEST["following"][0], $_REQUEST["following"][1]);
+
+    echo json_encode(array('result' => $result));
 }
 
 ?>
