@@ -26,6 +26,13 @@ $result = $db->getPosts($_SESSION["searchProfile"]["id"]);
             <input type="text" id="searchBoxInput" placeholder="Search a profile...">
             <div id="hints"></div>
         </div>
+        <nav>
+            <ul>
+                <li><a href="profile.php">Home</a></li>
+                <li><a href="feed.php">Feed</a></li>
+                <li><a href="settings.php">Settings</a></li>
+            </ul>
+        </nav>
     </header>
 
     <p id="txtHint"></p>
