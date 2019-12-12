@@ -1,4 +1,4 @@
-setTimeout(displayPosts, 500);
+setTimeout(displayPosts, 50);
 
 function displayPosts()
 {
