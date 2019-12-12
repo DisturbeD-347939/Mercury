@@ -50,4 +50,24 @@ function follow()
         } 
     });
 }
+
+function unfollow()
+{
+    $.ajax
+    ({
+        type: 'GET',
+        url: 'requests.php',
+        contentType: 'application/json; charset=utf-8',
+        data: {"unfollow":userID},
+        dataType: 'json',
+        success: function ()
+        {
+            $('#followButton').attr("onclick", "follow(" + userID + ")");
+            $('#followButton').html("Follow");
+        },
+        error: function ()
+        {
+            console.log("Error occured");
+        } 
+    });
 }
