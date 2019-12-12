@@ -29,7 +29,6 @@ header {
 
 #searchBox {
   position: static;
-  width: 500px;
   z-index: 1; }
   #searchBox input {
     font-size: 20px;
