@@ -18,6 +18,14 @@ header {
   header img {
     width: 400px;
     height: 400px; }
+  header nav li {
+    display: inline-block;
+    list-style: none;
+    color: black;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 0px 16px;
+    vertical-align: middle; }
 
 #searchBox {
   position: static;
