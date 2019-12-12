@@ -91,60 +91,40 @@ $('#searchBoxInput').on('keyup', function(e)
 
 function deletePost(id)
 {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function()
-    { // Call a function when the state changes.
-        if (this.readyState === xmlhttp.DONE && this.status === 200) 
+    $.ajax
+    ({
+        type: 'GET',
+        url: 'requests.php',
+        contentType: 'application/json; charset=utf-8',
+        data: {"del":id},
+        dataType: 'json',
+        success: function ()
         {
             $("#" + id).hide();
-        }
-    }
-    xmlhttp.open("GET", "requests.php?del=" + id, true);
-    xmlhttp.send();
+        },
+        error: function ()
+        {
+            console.log("Error occured");
+        } 
+    });
 }
 
 function goToProfile(id)
 {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function()
-    { // Call a function when the state changes.
-        if (this.readyState === xmlhttp.DONE && this.status === 200) 
+    $.ajax
+    ({
+        type: 'GET',
+        url: 'requests.php',
+        contentType: 'application/json; charset=utf-8',
+        data: {"searchProfile":id},
+        dataType: 'json',
+        success: function ()
         {
             window.location = "searchProfile.php";
-        }
-    }
-    xmlhttp.open("GET", "requests.php?searchProfile=" + id, true);
-    xmlhttp.send();
-}
-
-function follow(id)
-{
-    console.log("Following " + id);
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function()
-    { // Call a function when the state changes.
-        if (this.readyState === xmlhttp.DONE && this.status === 200) 
+        },
+        error: function ()
         {
-            $('#followButton').attr("onclick", "unfollow(" + id + ")");
-            $('#followButton').html("Unfollow");
-        }
-    }
-    xmlhttp.open("GET", "requests.php?follow=" + id, true);
-    xmlhttp.send();
-}
-
-function unfollow(id)
-{
-    console.log("Unfollowing " + id);
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function()
-    { // Call a function when the state changes.
-        if (this.readyState === xmlhttp.DONE && this.status === 200) 
-        {
-            $('#followButton').attr("onclick", "follow(" + id + ")");
-            $('#followButton').html("Follow");
-        }
-    }
-    xmlhttp.open("GET", "requests.php?unfollow=" + id, true);
-    xmlhttp.send();
+            console.log("Error occured");
+        } 
+    });
 }
