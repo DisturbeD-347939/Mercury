@@ -74,7 +74,6 @@ class DB
         $tempValues = array_values($attributes)[0];
 
         $result = $database->query("DELETE FROM $table WHERE $tempKeys = '$tempValues'");
-        //var_dump("DELETE FROM $table WHERE $tempKeys = '$tempValues'");
 
         $this->DBDisconnect($database);
         return $result;
@@ -136,6 +135,17 @@ class DB
             return [0];
         }
     }
+
+    function following($followerID, $userID)
+    {
+        $database = $this->DBConnect();
+
+        $result = $database->query("SELECT FROM follows WHERE followerID = $followerID && userID = $userID");
+
+        $this->DBDisconnect($database);
+        return $result->fetchAll();
+    }
+
 }
 
 ?>
