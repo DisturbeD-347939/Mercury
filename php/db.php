@@ -156,6 +156,16 @@ class DB
         return $result->fetchAll();
     }
 
+    function getMultiplePosts($userIDs)
+    {
+        $database = $this->DBConnect();
+
+        $result = $database->query("SELECT * FROM posts WHERE userID IN ($userIDs)");
+
+        $this->DBDisconnect($database);
+        return [$result->fetchAll()];
+    }
+
 }
 
 ?>
