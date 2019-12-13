@@ -91,4 +91,11 @@ else if(@$_REQUEST["followerID"] && @$_REQUEST["userID"])
     echo json_encode(array('result' => $result));
 }
 
+else if(@$_REQUEST["getPosts"])
+{
+    $result = $db->getMultiplePosts($_REQUEST["getPosts"]);
+
+    echo json_encode(array('result'=>$result));
+}
+
 ?>
