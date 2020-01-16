@@ -141,14 +141,14 @@ else if(@$_POST['post'])
 }
 
 //Delete account request
-else if($_POST['deleteAccount'])
+else if(@$_POST['deleteAccount'])
 {
     $db->delete("users", array("username"=>$_SESSION["user"]["username"]));
     header('Location: ../index.php');
 }
 
 //Log in request
-else if($_POST['log_in'])
+else if(@$_POST['log_in'])
 {
     $data = $_POST['log_in'];
     $result = $db->login($data['email'], hash('sha256', $data['password']));
@@ -164,4 +164,3 @@ else if($_POST['log_in'])
         header('Location: ../html/login_form.html');
     }
 }
-?>
