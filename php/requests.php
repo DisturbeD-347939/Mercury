@@ -8,6 +8,7 @@ if(!session_id())
 include_once '../php/db.php';
 $db = new DB;
 
+//GET REQUESTS
 if(@$_REQUEST["search"])
 {
     $names = [];
@@ -52,15 +53,6 @@ else if(@$_REQUEST["del"])
     echo json_encode(array('result'=>$result));
 }
 
-else if(@$_POST["title"] && $_POST["content"])
-{
-    $db->add("posts", array("content"=>$_POST["content"], "title"=>$_POST["title"], "userID"=>$_SESSION["user"]["id"]));
-
-    $result = $db->getPosts($_SESSION["user"]["id"]);
-
-    echo json_encode(array('result' => $result));
-}
-
 else if(@$_REQUEST["searchProfile"])
 {
     $result = $db->searchUser($_REQUEST["searchProfile"]);
@@ -96,6 +88,45 @@ else if(@$_REQUEST["getPosts"])
     $result = $db->getMultiplePosts($_REQUEST["getPosts"]);
 
     echo json_encode(array('result'=>$result));
+}
+
+//POST REQUESTS
+if(@$_POST['register'])
+{
+    $register = $_POST['register'];
+    $register['password'] = hash('sha256', $register['password']);
+    if(!$db->repeated($register))
+    {
+        $result = $db->add("users", $register);
+        if($result[0])
+        {
+            $_SESSION['id'] = $result[1];
+            mkdir("../Users/" . $result[1]);
+            copy('https://i.imgur.com/mCHMpLT.png?3', '../Users/' . $result[1] . '/profilePicture.png');
+            echo "Account created, log in with your details above!";
+            $_POST = array();
+            include '../php/login_form.php';
+        }
+        else
+        {
+            echo "Wrong query!";
+        }
+    }
+    else
+    {
+        echo "Existing!!";
+        include '../html/create_account.html';
+    }
+}
+
+else if(@$_POST['post'])
+{
+    $post = $_POST['post'];
+    $db->add("posts", array("content"=>$post["content"], "title"=>$post["title"], "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
+
+    $result = $db->getPosts($_SESSION["user"]["id"]);
+
+    echo json_encode(array('result' => $result));
 }
 
 ?>
