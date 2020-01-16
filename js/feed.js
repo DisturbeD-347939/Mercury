@@ -33,10 +33,12 @@ function run()
                 var date = "null";
                 if(data["result"][0][i]["timestamp"]) 
                 {
+                    //Turn timestamp into milliseconds
                     date = new Date(data["result"][0][i]["timestamp"] * 1000);
+                    //Set date to when post was created
                     date = date.getHours() + ":" + date.getMinutes() + " " + date.getDate() + "." + date.getMonth()+1 + "." + date.getFullYear();
                 }
-                $('#feedPosts').append("<div id=" + data["result"][0][i]["id"] + "><hr><h3>" + data["result"][0][i]["title"] + "</h3><p>" + data["result"][0][i]["content"] + "</p><p>" + date + "</p></div>");
+                $('#feedPosts').append("<div id=" + data["result"][0][i]["id"] + "><hr><h3>" + data["result"][0][i]["title"] + "</h3><p>" + data["result"][0][i]["content"] + "</p><p><small>" + date + "</small></p></div>");
             }
         })
     })
