@@ -46,7 +46,7 @@ class DB
     }
 
     //Get identification from a user
-    function getNames($id)
+    function searchNames($id)
     {
         $database = $this->DBConnect();
 
