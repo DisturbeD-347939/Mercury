@@ -37,6 +37,7 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
 
     <p id="txtHint"></p>
     <img id="profilePic" src="../Users/<?php echo $_SESSION['user']['id']?>/profilePicture.png">
+    <p><?php echo time() ?></p>
     <h1>This is your profile <?php echo $_SESSION['user']['first_name'] ?></h1>
     <p>Enjoy your homepage!
 
@@ -53,9 +54,9 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
     <h2>Create a post!</h2>
     <form method="post" id="postForm">
         <p>Title</p>
-        <input type="text" name="title" required>
+        <input type="text" name="post[title]" required>
         <p>Text</p>
-        <textarea name="content" required></textarea>
+        <textarea name="post[content]" required></textarea>
         <p></p>
         <input type="submit" value="Post!">
     </form>
