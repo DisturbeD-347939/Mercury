@@ -45,6 +45,7 @@ class DB
         return [$result, $id];
     }
 
+    //Get identification from a user
     function getNames($id)
     {
         $database = $this->DBConnect();
@@ -55,6 +56,7 @@ class DB
         return $result->fetchAll();
     }
 
+    //Search a user in the database
     function searchUser($id)
     {
         $database = $this->DBConnect();
@@ -79,6 +81,7 @@ class DB
         return $result;
     }
 
+    //Get posts from a user
     function getPosts($userID)
     {
         $database = $this->DBConnect();
@@ -97,6 +100,7 @@ class DB
         }
     }
 
+    //Check if the user already exists in the database
     function repeated($data)
     {
         $database = $this->DBConnect();
@@ -118,6 +122,7 @@ class DB
         return $found;
     }
 
+    //Login into the website 
     function login($email, $password)
     {
         $database = $this->DBConnect();
@@ -136,6 +141,7 @@ class DB
         }
     }
 
+    //Check if a user is following another
     function following($followerID, $userID)
     {
         $database = $this->DBConnect();
@@ -146,6 +152,7 @@ class DB
         return $result->fetch();
     }
 
+    //Check how many followers a user has
     function getFollows($id)
     {
         $database = $this->DBConnect();
@@ -156,6 +163,7 @@ class DB
         return $result->fetchAll();
     }
 
+    //Get multiple posts from users
     function getMultiplePosts($userIDs)
     {
         $database = $this->DBConnect();

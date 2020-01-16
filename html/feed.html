@@ -3,6 +3,7 @@
 include_once '../php/db.php';
 $db = new DB;
 
+//Get followers ids
 $result = $db->getFollows($_SESSION["user"]["id"]);
 
 ?>
@@ -40,6 +41,7 @@ $result = $db->getFollows($_SESSION["user"]["id"]);
 </body>
 
 <script type="text/javascript">
+    //Sends followers ids into feed.js script to retrieve the posts
     var ids = JSON.stringify(<?= json_encode($result) ?>);
 </script>
 <script src="../js/feed.js"></script>

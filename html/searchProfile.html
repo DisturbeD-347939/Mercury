@@ -3,6 +3,7 @@
 include_once '../php/db.php';
 $db = new DB;
 
+//Get posts from user searched
 $result = $db->getPosts($_SESSION["searchProfile"]["id"]);
 
 ?>
@@ -44,6 +45,7 @@ $result = $db->getPosts($_SESSION["searchProfile"]["id"]);
 </body>
 
 <script type="text/javascript">
+    //Pass posts and searching status along with the searching userID and the person searching ID
     var posts = <?= json_encode($result) ?>;
     var searching = 1;
     var userID = <?= $_SESSION["searchProfile"]["id"] ?>;

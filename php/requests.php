@@ -8,7 +8,9 @@ if(!session_id())
 include_once '../php/db.php';
 $db = new DB;
 
-//GET REQUESTS
+/*************************************GET REQUESTS*************************************/
+
+//Search request
 if(@$_REQUEST["search"])
 {
     $names = [];
@@ -44,6 +46,7 @@ if(@$_REQUEST["search"])
     echo json_encode(array('hint'=>$hint));
 }
 
+//Delete post request
 else if(@$_REQUEST["del"])
 {
     $q = $_REQUEST['del'];
@@ -53,6 +56,7 @@ else if(@$_REQUEST["del"])
     echo json_encode(array('result'=>$result));
 }
 
+//Search profile request
 else if(@$_REQUEST["searchProfile"])
 {
     $result = $db->searchUser($_REQUEST["searchProfile"]);
@@ -62,6 +66,7 @@ else if(@$_REQUEST["searchProfile"])
     echo json_encode(array('result'=>$result));
 }
 
+//Follow request
 else if(@$_REQUEST["follow"])
 {
     $result = $db->add("follows", array("followerID"=>$_SESSION["user"]["id"], "userID"=>$_REQUEST["follow"]));
@@ -69,6 +74,7 @@ else if(@$_REQUEST["follow"])
     echo json_encode(array('result'=>$result));
 }
 
+//Unfollow request
 else if(@$_REQUEST["unfollow"])
 {
     $result = $db->delete("follows", array("userID"=>$_REQUEST["unfollow"], "followerID"=>$_SESSION["user"]["id"]));
@@ -76,6 +82,7 @@ else if(@$_REQUEST["unfollow"])
     echo json_encode(array('result'=>$result));
 }
 
+//Following? request
 else if(@$_REQUEST["followerID"] && @$_REQUEST["userID"])
 {
     $result = $db->following($_REQUEST["followerID"], $_REQUEST["userID"]);
@@ -83,6 +90,7 @@ else if(@$_REQUEST["followerID"] && @$_REQUEST["userID"])
     echo json_encode(array('result' => $result));
 }
 
+//Get posts from user request
 else if(@$_REQUEST["getPosts"])
 {
     $result = $db->getMultiplePosts($_REQUEST["getPosts"]);
@@ -90,7 +98,9 @@ else if(@$_REQUEST["getPosts"])
     echo json_encode(array('result'=>$result));
 }
 
-//POST REQUESTS
+/*************************************POST REQUESTS*************************************/
+
+//Register request
 if(@$_POST['register'])
 {
     $register = $_POST['register'];
@@ -119,6 +129,7 @@ if(@$_POST['register'])
     }
 }
 
+//New post request
 else if(@$_POST['post'])
 {
     $post = $_POST['post'];
@@ -129,4 +140,28 @@ else if(@$_POST['post'])
     echo json_encode(array('result' => $result));
 }
 
+//Delete account request
+else if($_POST['deleteAccount'])
+{
+    $db->delete("users", array("username"=>$_SESSION["user"]["username"]));
+    header('Location: ../index.php');
+}
+
+//Log in request
+else if($_POST['log_in'])
+{
+    $data = $_POST['log_in'];
+    $result = $db->login($data['email'], hash('sha256', $data['password']));
+    if($result[0])
+    {
+        $_SESSION['user'] = $result[1];
+        $_SESSION['login'] = true;
+        header('Location: ../php/profile.php');
+    }
+    else
+    {
+        echo "Incorrect details, try again!";
+        header('Location: ../html/login_form.html');
+    }
+}
 ?>

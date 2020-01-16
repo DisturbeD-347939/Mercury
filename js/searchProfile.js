@@ -1,6 +1,7 @@
-setup();
+following();
 
-function setup()
+//Check if user is already following or not
+function following()
 {
     $.ajax
     ({
@@ -30,6 +31,7 @@ function setup()
     });
 }
 
+//Follow user
 function follow()
 {
     $.ajax
@@ -51,6 +53,7 @@ function follow()
     });
 }
 
+//Unfollow user
 function unfollow()
 {
     $.ajax

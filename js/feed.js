@@ -1,6 +1,6 @@
 setTimeout(run, 50);
 
-//HEEEEEEEEEEEEEEEEEEEEEEEEEELP
+//AJAX request to get posts from am user
 function request(ids, callback)
 {
     $.ajax
@@ -21,16 +21,21 @@ function request(ids, callback)
     });
 }
 
+//Main function
 function run()
 {
+    //Format ids
     ids = JSON.parse(ids);
+    //Call parsing ids function
     parseIDs(ids, function(data)
     {
+        //Request posts from userIDs
         request(data, function(data)
         {
+            //Display all the posts
             for(var i = 0; i < data["result"][0].length; i++)
             {
-                var date = "null";
+                var date = "Error getting timestamps";
                 if(data["result"][0][i]["timestamp"]) 
                 {
                     //Turn timestamp into milliseconds
@@ -38,6 +43,7 @@ function run()
                     //Set date to when post was created
                     date = date.getHours() + ":" + date.getMinutes() + " " + date.getDate() + "." + date.getMonth()+1 + "." + date.getFullYear();
                 }
+                //Create posts
                 $('#feedPosts').append("<div id=" + data["result"][0][i]["id"] + "><hr><h3>" + data["result"][0][i]["title"] + "</h3><p>" + data["result"][0][i]["content"] + "</p><p><small>" + date + "</small></p></div>");
             }
         })
@@ -45,9 +51,11 @@ function run()
     
 }
 
+//Get all userID's
 function parseIDs(ids, callback)
 {
     var data = "";
+    //Prepare ids for a query
     for(var i = 0; i < ids.length; i++)
     {
         if(i+1 == ids.length)
@@ -60,9 +68,4 @@ function parseIDs(ids, callback)
         }
     }
     callback(data);
-}
-
-function displayPosts()
-{
-    console.log("Displaying");
 }
