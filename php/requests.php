@@ -14,7 +14,7 @@ $db = new DB;
 if(@$_REQUEST["search"])
 {
     $names = [];
-    $getNames = $db->getNames($_SESSION["user"]["id"]);
+    $getNames = $db->searchNames($_SESSION["user"]["id"]);
     foreach($getNames as $k => $v)
     {
         array_push($names, $v["first_name"] . " " . $v["surname"] . " @" . $v["username"] . " " . $v["id"]);
