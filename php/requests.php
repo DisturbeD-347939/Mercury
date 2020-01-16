@@ -98,6 +98,13 @@ else if(@$_REQUEST["getPosts"])
     echo json_encode(array('result'=>$result));
 }
 
+else if(@$_REQUEST["getNames"])
+{
+    $result = $db->getMultipleIDS($_REQUEST["getNames"]);
+
+    echo json_encode(array('results'=>$result));
+}
+
 /*************************************POST REQUESTS*************************************/
 
 //Register request
