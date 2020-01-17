@@ -159,11 +159,11 @@ if(@$_POST['register'])
 else if(@$_POST['post'])
 {
     $post = $_POST['post'];
-    $db->add("posts", array("content"=>$post["content"], "title"=>$post["title"], "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
+    $db->add("posts", array("content"=>$post['content'], "title"=>$post['title'], "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
 
     $result = $db->getPosts($_SESSION["user"]["id"]);
 
-    echo json_encode(array('result' => $result));
+    echo json_encode(array('result'=>$result));
 }
 
 //Delete account request
