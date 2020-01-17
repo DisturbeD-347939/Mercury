@@ -31,7 +31,7 @@ function displayPosts()
 }
 
 //Create new post AJAX request
-$('#postForm').submit(function(e)
+$('#postFormProfile').submit(function(e)
 {
     e.preventDefault();
     $.ajax
