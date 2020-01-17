@@ -33,7 +33,6 @@ function request(ids, callback)
     $.when(getPosts, getNames, getProfilePicture).done(function(a,b,c)
     {
         var data = [a[0], b[0], c[0]];
-        console.log(c[0]["result"][0]);
         callback(data);
     })
 }
@@ -43,6 +42,31 @@ function run()
 {
     //Format ids
     ids = JSON.parse(ids);
+    var tempArray = {userID: profileID.toString()};
+    ids.push(tempArray);
+
+    buildPosts(function(timestamps)
+    {
+        timestamps.reverse(timestamps.sort(sortFunction));
+        for(var i = 0; i < timestamps.length; i++)
+        {
+            $('#feedPosts').append(timestamps[i][1]);
+        }
+    })
+}
+
+function sortFunction(a, b) 
+{
+    if (a[0] === b[0]) return 0;
+    else return (a[0] < b[0]) ? -1 : 1;
+}
+
+function buildPosts(callback)
+{
+    //Variables
+    var timestamps = [];
+    var tempArray = [];
+
     //Call parsing ids function
     parseIDs(ids, function(parsed)
     {
@@ -55,10 +79,11 @@ function run()
                 var date = "Error getting timestamps";
                 if(data[0]["result"][0][i]["timestamp"]) 
                 {
+                    tempArray.push(data[0]["result"][0][i]["timestamp"]);
                     //Turn timestamp into milliseconds
                     date = new Date(data[0]["result"][0][i]["timestamp"] * 1000);
                     //Set date to when post was created
-                    date = date.getHours() + ":" + date.getMinutes() + " " + date.getDate() + "." + date.getMonth()+1 + "." + date.getFullYear();
+                    date = date.getHours() + ":" + date.getMinutes() + " " + date.getDate() + "." + date.getMonth() +1 + "." + date.getFullYear();
                 }
 
                 //Get names
@@ -72,17 +97,21 @@ function run()
                         {
                             if(data[2]["result"][k][0] == data[1]["result"][0][j]["id"])
                             {
+                                tempArray.push("<div class='post' id=" + data[0]["result"][0][i]["id"] + "><image   src='" + data[2]["result"][k][1] + "'</image><h2>" + data[1]["result"][0][j]                                  ["first_name"] + " " + data[1]["result"][0][j]["surname"]  + "</h2><p><h3>" + data[0]["result"][0][i]["title"]                           + "</  h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p   id='date'><small>" + date + "</small></p></div>");
+
+                                timestamps.push(tempArray);
+                                tempArray = [];
                                 //Create posts
-                                $('#feedPosts').append("<div class='post' id=" + data[0]["result"][0][i]["id"] + "><image src='" + data[2]["result"][k][1] + "'</image><h2>" + data[1]["result"][0][j]                               ["first_name"] + " " + data[1]["result"][0][j]["surname"] + "</h2><p><h3>" + data[0]["result"][0][i]["title"]                           + "</h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p id='date'><small>" + date + "</small></p></div>");
+                                /*$('#feedPosts').append("<div class='post' id=" + data[0]["result"][0][i]["id"] +  "><image src='" + data[2]["result"][k][1] + "'</image><h2>" + data[1]["result"][0]   [j]                               ["first_name"] + " " + data[1]["result"][0][j]   ["surname"] + "</h2><p><h3>" + data[0]["result"][0][i]["title"]                               + "</h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p     id='date'><small>" + date + "</small></p></div>");*/
                                 break;
                             }
                         }
                     }
                 }
             }
+            callback(timestamps);
         })
     })
-    
 }
 
 //Get all userID's
@@ -103,3 +132,21 @@ function parseIDs(ids, callback)
     }
     callback(data);
 }
+
+//Create new post AJAX request
+$('#postFormFeed').submit(function(e)
+{
+    e.preventDefault();
+    $.ajax
+    ({
+        type: "POST",
+        url: "requests.php",
+        data: $(this).serialize(),
+        success: function(response)
+        {
+            var jsonResponse = JSON.parse(response);
+            posts = jsonResponse["result"];
+            displayPosts();
+        }
+    })
+});
