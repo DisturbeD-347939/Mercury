@@ -54,6 +54,7 @@ $result = $db->getFollows($_SESSION["user"]["id"]);
 <script type="text/javascript">
     //Sends followers ids into feed.js script to retrieve the posts
     var ids = JSON.stringify(<?= json_encode($result) ?>);
+    var profileID = <?= $_SESSION['user']['id'] ?>;
 </script>
 <script src="../js/feed.js"></script>
 <script src="../js/hint.js"></script>
