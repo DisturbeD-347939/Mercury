@@ -3,22 +3,39 @@ setTimeout(run, 50);
 //AJAX request to get posts from am user
 function request(ids, callback)
 {
-    $.ajax
+    var getPosts = $.ajax
     ({
         type: 'GET',
         url: 'requests.php',
         contentType: 'application/json; charset=utf-8',
         data: {"getPosts":ids},
-        dataType: 'json',
-        success: function (response)
-        {
-            callback(response);
-        },
-        error: function ()
-        {
-            callback("fail");
-        } 
+        dataType: 'json'
     });
+    var getNames = $.ajax
+    ({
+        type: 'GET',
+        url: 'requests.php',
+        contentType: 'application/json; charset=utf-8',
+        data: {"getNames":ids},
+        dataType: 'json'
+    }); 
+    var getProfilePicture = $.ajax
+    ({
+        type: 'GET',
+        url: 'requests.php',
+        contentType: 'application/json; charset=utf-8',
+        data: {"getProfilePic":ids},
+        dataType: 'json'
+    })
+
+/************************************FIX THIS************************************************/
+
+    $.when(getPosts, getNames, getProfilePicture).done(function(a,b,c)
+    {
+        var data = [a[0], b[0], c[0]];
+        console.log(c[0]["result"][0]);
+        callback(data);
+    })
 }
 
 //Main function
