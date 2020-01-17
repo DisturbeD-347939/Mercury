@@ -29,9 +29,9 @@ $result = $db->getFollows($_SESSION["user"]["id"]);
         </div>
         <nav>
             <ul>
-                <li><a href="../php/profile.php">Home</a></li>
-                <li><a href="../php/feed.php">Feed</a></li>
-                <li><a href="../php/settings.php">Settings</a></li>
+                <li><button onclick="window.location.href = '../php/profile.php'">Profile</button></li>
+                <li><button onclick="window.location.href = '../php/feed.php'">Home</button></li>
+                <li><button onclick="window.location.href = '../php/settings.php'">Settings</button></li>
             </ul>
         </nav>
     </header>
