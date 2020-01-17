@@ -77,7 +77,7 @@ else if(@$_REQUEST["follow"])
 //Unfollow request
 else if(@$_REQUEST["unfollow"])
 {
-    $result = $db->delete("follows", array("userID"=>$_REQUEST["unfollow"], "followerID"=>$_SESSION["user"]["id"]));
+    $result = $db->deleteMultiple("follows", array("userID"=>$_REQUEST["unfollow"], "followerID"=>$_SESSION["user"]["id"]));
 
     echo json_encode(array('result'=>$result));
 }
@@ -122,6 +122,13 @@ else if(@$_REQUEST["getProfilePic"])
     }
 
     echo json_encode(array('result'=>$images));
+}
+
+else if(@$_REQUEST["getLikes"])
+{
+    $result = $db->getLikes($_REQUEST["getLikes"]);
+
+    echo json_encode(array('result'=>$result));
 }
 
 /*************************************POST REQUESTS*************************************/
@@ -188,6 +195,18 @@ else if(@$_POST['log_in'])
     {
         echo "Incorrect details, try again!";
         header('Location: ../html/login_form.html');
+    }
+}
+
+else if(@$_POST['likeID'] && @$_POST['postID'])
+{
+    if($_POST['delete'])
+    {
+        $result = $db->deleteMultiple("likes", array("likeID"=>$_POST['likeID'], "postID"=>$_POST['postID']));
+    }
+    else
+    {
+        $result = $db->add("likes", array("likeID"=>$_POST['likeID'], "postID"=>$_POST['postID']));
     }
 }
 

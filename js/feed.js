@@ -42,6 +42,7 @@ function run()
 {
     //Format ids
     ids = JSON.parse(ids);
+    
     var tempArray = {userID: profileID.toString()};
     ids.push(tempArray);
 
@@ -91,21 +92,22 @@ function buildPosts(callback)
                 {
                     if(data[1]["result"][0][j]["id"] == data[0]["result"][0][i]["userID"])
                     {
-
                         //Get profile pictures
                         for(var k = 0; k < data[2]["result"].length; k++)
                         {
                             if(data[2]["result"][k][0] == data[1]["result"][0][j]["id"])
                             {
-                                tempArray.push("<div class='post' id=" + data[0]["result"][0][i]["id"] + "><image   src='" + data[2]["result"][k][1] + "'</image><h2>" + data[1]["result"][0][j]                                  ["first_name"] + " " + data[1]["result"][0][j]["surname"]  + "</h2><p><h3>" + data[0]["result"][0][i]["title"]                           + "</  h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p   id='date'><small>" + date + "</small></p></div>");
+                                checkLikes(data[0]["result"][0][i]["id"]);
+                                
+                                tempArray.push("<div class='post' id=" + data[0]["result"][0][i]["id"] + "><image src='" + data[2]["result"][k][1] + "'</image><h2>" + data[1]["result"][0][j]["first_name"] + " " + data[1]["result"][0][j]["surname"]  + "</h2><p><h3>" + data[0]["result"][0][i]["title"]+ "</h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p id='date'><small>" + date + "</small></p><div onclick=like(" + data[0]["result"][0][i]["id"] + ")><img id='postLike' src='../images/dislike.png'></img><p>0</p><div></div>");
 
+                                //Push it into the finished array and delete everythingfrom the temp one
                                 timestamps.push(tempArray);
                                 tempArray = [];
-                                //Create posts
-                                /*$('#feedPosts').append("<div class='post' id=" + data[0]["result"][0][i]["id"] +  "><image src='" + data[2]["result"][k][1] + "'</image><h2>" + data[1]["result"][0]   [j]                               ["first_name"] + " " + data[1]["result"][0][j]   ["surname"] + "</h2><p><h3>" + data[0]["result"][0][i]["title"]                               + "</h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p     id='date'><small>" + date + "</small></p></div>");*/
                                 break;
                             }
                         }
+                        break;
                     }
                 }
             }
@@ -144,9 +146,81 @@ $('#postFormFeed').submit(function(e)
         data: $(this).serialize(),
         success: function(response)
         {
-            var jsonResponse = JSON.parse(response);
-            posts = jsonResponse["result"];
-            displayPosts();
+            $('#feedPosts').empty();
+            buildPosts(function(timestamps)
+            {
+                timestamps.reverse(timestamps.sort(sortFunction));
+                for(var i = 0; i < timestamps.length; i++)
+                {
+                    $('#feedPosts').append(timestamps[i][1]);
+                }
+            })
         }
     })
 });
+
+function like(id)
+{
+    $.ajax
+    ({
+        type: "POST",
+        url: "requests.php",
+        data: {"postID": id, "likeID": profileID, "delete": 0},
+        success: function(response)
+        {
+            console.log("Liked");
+            $('#' + id + '> div > img').attr("src", "../images/like.png");
+            $('#' + id + '> div').attr("onclick", "dislike(" + id + ")");
+            checkLikes(id);
+        }
+    })
+}
+
+function dislike(id)
+{
+    $.ajax
+    ({
+        type: "POST",
+        url: "requests.php",
+        data: {"postID": id, "likeID": profileID, "delete": 1},
+        success: function(response)
+        {
+            console.log("Disliked");
+            $('#' + id + '> div > img').attr("src", "../images/dislike.png");
+            $('#' + id + '> div').attr("onclick", "like(" + id + ")");
+            checkLikes(id);
+        }
+    })
+}
+
+function checkLikes(postID)
+{
+    $.ajax
+    ({
+        type: "POST",
+        url: "requests.php",
+        data: {"getLikes": postID},
+        success: function(response)
+        {
+            response = JSON.parse(response);
+            if(response['result'][0].length > 0)
+            {
+                $('#' + postID + '> div > p').text(response['result'][0].length);
+                for(var i = 0; i < response['result'][0].length; i++)
+                {
+                    if(response['result'][0][i]["likeID"] == profileID)
+                    {
+                        $('#' + postID + '> div > img').attr("src", "../images/like.png");
+                        $('#' + postID + '> div').attr("onclick", "dislike(" + postID + ")");
+                    }
+                }
+            }
+            else
+            {
+                $('#' + postID + '> div > img').attr("src", "../images/dislike.png");
+                $('#' + postID + '> div > p').text("0");
+                $('#' + postID + '> div').attr("onclick", "like(" + postID + ")");
+            }
+        }
+    })
+}

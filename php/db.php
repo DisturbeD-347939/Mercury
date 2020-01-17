@@ -81,6 +81,20 @@ class DB
         return $result;
     }
 
+    //Delete from the database
+    function deleteMultiple($table, $attributes) //MAXIMUM 2 attributes
+    {
+        $database = $this->DBConnect();
+
+        $tempKeys = array_keys($attributes);
+        $tempValues = array_values($attributes);
+
+        $result = $database->query("DELETE FROM $table WHERE $tempKeys[0]=$tempValues[0] AND $tempKeys[1]=$tempValues[1]");
+
+        $this->DBDisconnect($database);
+        return $result;
+    }
+
     //Get posts from a user
     function getPosts($userID)
     {
@@ -179,6 +193,16 @@ class DB
         $database = $this->DBConnect();
 
         $result = $database->query("SELECT * FROM users WHERE id IN ($userIDs)");
+
+        $this->DBDisconnect($database);
+        return [$result->fetchAll()];
+    }
+
+    function getLikes($postID)
+    {
+        $database = $this->DBConnect();
+
+        $result = $database->query("SELECT * FROM likes WHERE postID='$postID'");
 
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
