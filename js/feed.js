@@ -44,24 +44,41 @@ function run()
     //Format ids
     ids = JSON.parse(ids);
     //Call parsing ids function
-    parseIDs(ids, function(data)
+    parseIDs(ids, function(parsed)
     {
         //Request posts from userIDs
-        request(data, function(data)
+        request(parsed, function(data)
         {
-            //Display all the posts
-            for(var i = 0; i < data["result"][0].length; i++)
+            //Get timestamps
+            for(var i = 0; i < data[0]["result"][0].length; i++)
             {
                 var date = "Error getting timestamps";
-                if(data["result"][0][i]["timestamp"]) 
+                if(data[0]["result"][0][i]["timestamp"]) 
                 {
                     //Turn timestamp into milliseconds
-                    date = new Date(data["result"][0][i]["timestamp"] * 1000);
+                    date = new Date(data[0]["result"][0][i]["timestamp"] * 1000);
                     //Set date to when post was created
                     date = date.getHours() + ":" + date.getMinutes() + " " + date.getDate() + "." + date.getMonth()+1 + "." + date.getFullYear();
                 }
-                //Create posts
-                $('#feedPosts').append("<div id=" + data["result"][0][i]["id"] + "><hr><h3>" + data["result"][0][i]["title"] + "</h3><p>" + data["result"][0][i]["content"] + "</p><p><small>" + date + "</small></p></div>");
+
+                //Get names
+                for(var j = 0; j < data[1]["result"][0].length; j++)
+                {
+                    if(data[1]["result"][0][j]["id"] == data[0]["result"][0][i]["userID"])
+                    {
+
+                        //Get profile pictures
+                        for(var k = 0; k < data[2]["result"].length; k++)
+                        {
+                            if(data[2]["result"][k][0] == data[1]["result"][0][j]["id"])
+                            {
+                                //Create posts
+                                $('#feedPosts').append("<div class='post' id=" + data[0]["result"][0][i]["id"] + "><image src='" + data[2]["result"][k][1] + "'</image><h2>" + data[1]["result"][0][j]                               ["first_name"] + " " + data[1]["result"][0][j]["surname"] + "</h2><p><h3>" + data[0]["result"][0][i]["title"]                           + "</h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p id='date'><small>" + date + "</small></p></div>");
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         })
     })
