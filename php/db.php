@@ -174,11 +174,11 @@ class DB
         return [$result->fetchAll()];
     }
 
-    function getMultipleIDS($userIDs)
+    function getMultipleIDs($userIDs)
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT * FROM users WHERE userID IN ($userIDs)");
+        $result = $database->query("SELECT * FROM users WHERE id IN ($userIDs)");
 
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
