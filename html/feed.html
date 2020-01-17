@@ -36,6 +36,17 @@ $result = $db->getFollows($_SESSION["user"]["id"]);
         </nav>
     </header>
 
+    <div>
+        <h2>Create a post!</h2>
+        <form method="post" id="postForm">
+            <p>Title</p>
+            <input type="text" name="post[title]" required>
+            <p>Text</p>
+            <textarea name="post[content]" required></textarea>
+            <p></p>
+            <input type="submit" value="Post!">
+        </form>
+    </div>
     <div id="feedPosts"></div>
 
 </body>
