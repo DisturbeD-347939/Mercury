@@ -1,3 +1,23 @@
+function goToProfile(id)
+{
+    $.ajax
+    ({
+        type: 'GET',
+        url: 'requests.php',
+        contentType: 'application/json; charset=utf-8',
+        data: {"searchProfile":id},
+        dataType: 'json',
+        success: function ()
+        {
+            window.location = "../php/searchProfile.php";
+        },
+        error: function ()
+        {
+            console.log("Error occured");
+        } 
+    });
+}
+
 //Search bar function
 $('#searchBoxInput').on('keyup', function(e)
 {
