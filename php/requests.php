@@ -103,6 +103,23 @@ else if(@$_REQUEST["getNames"])
     $result = $db->getMultipleIDS($_REQUEST["getNames"]);
 
     echo json_encode(array('results'=>$result));
+else if(@$_REQUEST["getProfilePic"])
+{
+    //Separate ids into an array
+    $ids = explode(",",$_REQUEST["getProfilePic"]);
+    $images = [];
+
+    for($i = 0; $i < sizeof($ids); $i++)
+    {
+        $pic = "../Users/" . $ids[$i] . "/profilePicture.png";
+        $picData = base64_encode(file_get_contents($pic));
+        $data = 'data: '.mime_content_type($pic).';base64,'.$picData;
+        $tempArray = [$ids[$i], $data];
+        
+        array_push($images, $tempArray);
+    }
+
+    echo json_encode(array('result'=>$images));
 }
 
 /*************************************POST REQUESTS*************************************/
@@ -171,3 +188,5 @@ else if(@$_POST['log_in'])
         header('Location: ../html/login_form.html');
     }
 }
+
+?>
