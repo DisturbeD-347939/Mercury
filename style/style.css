@@ -2,14 +2,15 @@ body {
   width: 100%;
   margin: 0px;
   font-family: 'Montserrat', sans-serif;
-  color: white;
-  background-color: black;
+  color: black;
+  background-color: #E9EBEE;
   max-width: 100%;
   overflow-x: hidden; }
 
 header {
   height: 45px;
-  background-color: #4267B2;
+  background-color: #05386B;
+  border: 1px solid black;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -35,8 +36,10 @@ header {
       background: none;
       padding: 6px 22px;
       border-radius: 2px; }
+    header nav li button:hover {
+      background-color: #3B5CA0; }
   header nav li:not(:last-child) button {
-    border-right: 1px solid white; }
+    border-right: 0.6px solid white; }
 
 #searchBox {
   position: static;
@@ -53,7 +56,7 @@ header {
   border: 2px solid black;
   padding: 5px 5px; }
   .searches:hover {
-    background-color: white; }
+    background-color: black; }
 
 #hints {
   position: absolute; }
@@ -63,10 +66,10 @@ header {
   grid-template-columns: 0.2fr 1fr 1fr 0.2fr;
   grid-template-rows: 0.2fr 0.2fr 1fr 0.2fr;
   grid-gap: 10px 10px;
-  border: 1px white solid;
   padding: 20px 20px;
   margin: auto;
-  width: 45%; }
+  width: 45%;
+  background-color: white; }
   .post img {
     grid-column: 1;
     grid-row: 1;
@@ -76,7 +79,7 @@ header {
     object-position: 50% 50%;
     width: 80px;
     height: 80px;
-    border: 1px white solid; }
+    border: 1px black solid; }
   .post h2 {
     justify-self: left;
     align-self: center;
