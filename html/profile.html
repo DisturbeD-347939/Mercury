@@ -67,6 +67,7 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
 
 <script type="text/javascript">
     //Pass posts and the searching status
+    var profileID = <?= $_SESSION['user']['id'] ?>;
     var posts = <?= json_encode($result) ?>;
     var searching = 0;
 </script>
