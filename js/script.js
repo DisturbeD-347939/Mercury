@@ -62,22 +62,3 @@ $('#postFormProfile').submit(function(e)
     })
 });
 
-function deletePost(id)
-{
-    $.ajax
-    ({
-        type: 'GET',
-        url: 'requests.php',
-        contentType: 'application/json; charset=utf-8',
-        data: {"del":id},
-        dataType: 'json',
-        success: function ()
-        {
-            $("#" + id).hide();
-        },
-        error: function ()
-        {
-            console.log("Error occured");
-        } 
-    });
-}
