@@ -99,6 +99,29 @@ function checkLikes(postID)
     })
 }
 
+function checkPhotos(postID)
+{
+    $.ajax
+    ({
+        type: "POST",
+        url: "requests.php",
+        data: {"getPhoto": postID},
+        success: function(response)
+        {
+            console.log(response);
+            if(response == 1)
+            {
+                $('#' + postID + '> .postPic').attr("src", "../posts/" + postID + ".png");
+            }
+            else
+            {
+                console.log("Hidden");
+                $('#' + postID + '> .postPic').hide();
+            }
+        }
+    })
+}
+
 function sortFunction(a, b) 
 {
     if (a[0] === b[0]) return 0;
