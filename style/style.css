@@ -96,7 +96,8 @@ header {
     grid-row: 2; }
   .post #content {
     grid-column: 2/4;
-    grid-row: 3; }
+    grid-row: 3;
+    overflow: hidden; }
   .post div {
     display: flex;
     flex-direction: row;
@@ -111,6 +112,15 @@ header {
     border: none;
     width: 30px;
     height: 30px; }
+  .post button {
+    border: none;
+    padding: 0;
+    width: 25px;
+    height: 25px;
+    justify-self: right;
+    align-self: top;
+    background: url(../images/delete.png) no-repeat;
+    background-size: contain; }
 
 .post:not(:last-child) {
   margin-bottom: 20px; }
