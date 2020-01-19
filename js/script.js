@@ -27,8 +27,16 @@ function displayPosts()
                 //Get names
 
                 checkLikes(data[0]["result"][0][i]["id"]);
+                checkPhotos(data[0]["result"][0][i]["id"]);
                 
-                tempArray.push("<div class='post userPost' id=" + data[0]["result"][0][i]["id"] + "><img src='" + data[2]["result"][0][1] + "'></img><h2>" +  data[1]["result"][0][0]["first_name"] + " " + data[1]["result"][0][0]["surname"] + "</h2><h3>" +data[0]["result"][0][i]["title"] + "</h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p><small>" + date + "</small></p><div onclick=like(" + data[0]["result"][0][i]["id"] + ")><img id='postLike' src='../images/dislike.png'></img><p>0</p></div><button onclick='deletePost(" + data[0]["result"][0][i]["id"] + ")'></button></div>");
+                if(!searching)
+                {
+                    tempArray.push("<div class='post userPost' id=" + data[0]["result"][0][i]["id"] + "><img class='profilePic' src='" + data[2]["result"][0][1] + "'></img><h2>" +  data[1]["result"][0][0]["first_name"] + " " + data[1]["result"][0][0]["surname"] + "</h2><h3>" +data[0]["result"][0][i]["title"] + "</h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p class='date'><small>" + date + "</small></p><img class='postPic'><div onclick=like(" + data[0]["result"][0][i]["id"] + ")></img><img id='postLike' src='../images/dislike.png'></img><p>0</p></div><button onclick='deletePost(" + data[0]["result"][0][i]["id"] + ")'></button></div>");
+                }
+                else
+                {
+                    tempArray.push("<div class='post userPost' id=" + data[0]["result"][0][i]["id"] + "><img src='" + data[2]["result"][0][1] + "'></img><h2>" +  data[1]["result"][0][0]["first_name"] + " " + data[1]["result"][0][0]["surname"] + "</h2><h3>" +data[0]["result"][0][i]["title"] + "</h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p class='date'><small>" + date + "</small></p><div onclick=like(" + data[0]["result"][0][i]["id"] + ")><img id='postLike' src='../images/dislike.png'></img><p>0</p></div></div>");
+                }
 
                 timestamps.push(tempArray);
                 tempArray = [];
