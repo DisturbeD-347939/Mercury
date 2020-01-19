@@ -3,32 +3,35 @@ following();
 //Check if user is already following or not
 function following()
 {
-    $.ajax
-    ({
-        type: 'GET',
-        url: 'requests.php',
-        contentType: 'application/json; charset=utf-8',
-        data: {"followerID":followerID, "userID":userID},
-        dataType: 'json',
-        success: function (response)
-        {
-            var responseJSON = JSON.parse(JSON.stringify(response));
-            if(responseJSON["result"])
+    if(searching)
+    {
+        $.ajax
+        ({
+            type: 'GET',
+            url: 'requests.php',
+            contentType: 'application/json; charset=utf-8',
+            data: {"followerID":followerID, "userID":userID},
+            dataType: 'json',
+            success: function (response)
             {
-                $('#followButton').html("Unfollow");
-                $('#followButton').attr("onclick", "unfollow(" + userID + ")");
-            }
-            else
+                var responseJSON = JSON.parse(JSON.stringify(response));
+                if(responseJSON["result"])
+                {
+                    $('#followButton').html("Unfollow");
+                    $('#followButton').attr("onclick", "unfollow(" + userID + ")");
+                }
+                else
+                {
+                    $('#followButton').html("Follow");
+                    $('#followButton').attr("onclick", "follow(" + userID + ")");
+                }
+            },
+            error: function ()
             {
-                $('#followButton').html("Follow");
-                $('#followButton').attr("onclick", "follow(" + userID + ")");
-            }
-        },
-        error: function ()
-        {
-            console.log("Error occured");
-        } 
-    });
+                console.log("Error occured");
+            } 
+        });
+    } 
 }
 
 //Follow user
