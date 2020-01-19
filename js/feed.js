@@ -55,8 +55,17 @@ function buildPosts(callback)
                             if(data[2]["result"][k][0] == data[1]["result"][0][j]["id"])
                             {
                                 checkLikes(data[0]["result"][0][i]["id"]);
+                                checkPhotos(data[0]["result"][0][i]["id"]);
                                 
-                                tempArray.push("<div class='post' id=" + data[0]["result"][0][i]["id"] + "><image src='" + data[2]["result"][k][1] + "'</image><h2><div onclick=goToProfile(" + data[1]["result"][0][j]["id"] + ")>" + data[1]["result"][0][j]["first_name"] + " " + data[1]["result"][0][j]["surname"]  + "</div></h2><h3>" + data[0]["result"][0][i]["title"]+ "</h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p id='date'><small>" + date + "</small></p><div onclick=like(" + data[0]["result"][0][i]["id"] + ")><img id='postLike' src='../images/dislike.png'></img><p>0</p></div></div>");
+                                if(data[0]["result"][0][i]["userID"] == profileID)
+                                {
+                                    tempArray.push("<div class='post' id=" + data[0]["result"][0][i]["id"] + "><img class='profilePic' src='" + data[2]["result"][k][1] + "'</img><h2><div onclick=goToProfile(" + data[1]["result"][0][j]["id"] + ")>" + data[1]["result"][0][j]["first_name"] + " " + data[1]["result"][0][j]["surname"]  + "</div></h2><h3>" + data[0]["result"][0][i]["title"]+ "</h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p class='date'><small>" + date + "</small></p><img class='postPic'><div onclick=like(" + data[0]["result"][0][i]["id"] + ")><img id='postLike' src='../images/dislike.png'></img><p>0</p></div><button onclick='deletePost(" + data[0]["result"][0][i]["id"] + ")'></button></div>");
+                                }
+                                else
+                                {
+                                    tempArray.push("<div class='post' id=" + data[0]["result"][0][i]["id"] + "><img class='profilePic' src='" + data[2]["result"][k][1] + "'</img><h2><div onclick=goToProfile(" + data[1]["result"][0][j]["id"] + ")>" + data[1]["result"][0][j]["first_name"] + " " + data[1]["result"][0][j]["surname"]  + "</div></h2><h3>" + data[0]["result"][0][i]["title"]+ "</h3><p id='content'>" + data[0]["result"][0][i]["content"] + "</p><p class='date'><small>" + date + "</small></p><img class='postPic'><div onclick=like(" + data[0]["result"][0][i]["id"] + ")><img id='postLike' src='../images/dislike.png'></img><p>0</p></div></button></div>");
+                                }
+                                
 
                                 //Push it into the finished array and delete everythingfrom the temp one
                                 timestamps.push(tempArray);
