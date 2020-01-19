@@ -65,8 +65,37 @@ $('#postFormProfile').submit(function(e)
         {
             var jsonResponse = JSON.parse(response);
             posts = jsonResponse["result"];
-            displayPosts();
+
+            var fileID = jsonResponse["result"][1][jsonResponse["result"][1].length-1]["id"];
+
+            if($('#postPic').val() != "")
+            {
+                var file_data = $('#postPic').prop('files')[0];
+                var form_data = new FormData();                  
+                form_data.append('file', file_data);
+                form_data.append('id', fileID);
+                $.ajax
+                ({
+                    url: 'uploadPostPic.php', // point to server-side PHP script 
+                    dataType: 'text',  // what to expect back from the PHP script, if anything
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,                         
+                    type: 'post',
+                    success: function(data)
+                    {
+                        console.log("Done");
+                        displayPosts();
+                    }
+                });
+            }
+            else
+            {
+                displayPosts();
+            }
         }
     })
-});
 
+    
+});
