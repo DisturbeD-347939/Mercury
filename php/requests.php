@@ -131,6 +131,23 @@ else if(@$_REQUEST["getLikes"])
     echo json_encode(array('result'=>$result));
 }
 
+else if(@$_REQUEST["getPhoto"])
+{
+    $id = $_REQUEST["getPhoto"];
+
+    $pic = "../posts/" . $id . ".png";
+    if(file_exists($pic))
+    {
+        $data = 1;
+    }
+    else
+    {
+        $data = 0;
+    }
+
+    echo $data;
+}
+
 /*************************************POST REQUESTS*************************************/
 
 //Register request
@@ -166,6 +183,7 @@ if(@$_POST['register'])
 else if(@$_POST['post'])
 {
     $post = $_POST['post'];
+
     $db->add("posts", array("content"=>$post['content'], "title"=>$post['title'], "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
 
     $result = $db->getPosts($_SESSION["user"]["id"]);
