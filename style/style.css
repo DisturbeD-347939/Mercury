@@ -107,7 +107,7 @@ header {
     grid-column: 1/5;
     grid-row: 3;
     word-break: break-all; }
-  .post div img {
+  .post .postButtons img {
     margin-right: 20px;
     align-self: center;
     justify-self: center;
@@ -132,7 +132,8 @@ header {
     grid-row: 5;
     border-bottom: 1px solid #DADDE1;
     border-top: 1px solid #DADDE1;
-    padding: 0px 50px; }
+    padding: 0px 50px;
+    margin-top: 30px; }
     .post .like:hover {
       background-color: #F2F3F5; }
   .post .comments {
@@ -144,17 +145,65 @@ header {
     grid-row: 5;
     border-bottom: 1px solid #DADDE1;
     border-top: 1px solid #DADDE1;
-    padding: 0px 50px; }
+    padding: 0px 50px;
+    margin-top: 30px; }
     .post .comments:hover {
       background-color: #F2F3F5; }
   .post .commentBox {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-self: left;
     justify-self: top;
     grid-column: 1/5;
     grid-row: 6;
     width: 100%; }
+    .post .commentBox .comment {
+      display: flex;
+      flex-direction: row;
+      justify-self: center;
+      background-color: #DADDE1;
+      width: auto;
+      border-radius: 2%;
+      padding: 5px 5px; }
+      .post .commentBox .comment div:nth-child(1) {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        justify-self: center;
+        margin-right: 20px;
+        min-width: 100px;
+        max-width: 100px; }
+        .post .commentBox .comment div:nth-child(1) img {
+          align-self: center;
+          justify-self: flex-start;
+          border-radius: 50%;
+          object-fit: cover;
+          object-position: 50% 50%;
+          width: 40px;
+          height: 40px;
+          border: 1px black solid; }
+        .post .commentBox .comment div:nth-child(1) p {
+          margin: 0px;
+          margin-top: 5px;
+          text-align: center; }
+      .post .commentBox .comment div:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        justify-self: center; }
+        .post .commentBox .comment div:nth-child(2) p {
+          margin: 0px; }
+        .post .commentBox .comment div:nth-child(2) p:nth-child(1) {
+          margin: 0px; }
+      .post .commentBox .comment p {
+        justify-self: center; }
+      .post .commentBox .comment:nth-child(1) {
+        margin-top: 15px; }
+      .post .commentBox .comment:not(:last-child) {
+        margin-bottom: 10px; }
+    .post .commentBox form textarea {
+      width: 100%;
+      resize: vertical; }
 
 .post:not(:last-child) {
   margin-bottom: 20px; }
@@ -169,5 +218,8 @@ header {
     width: 250px;
     height: 250px;
     border: 1px white solid; }
+
+.hide {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */
