@@ -168,14 +168,12 @@ function checkPhotos(postID)
         data: {"getPhoto": postID},
         success: function(response)
         {
-            console.log(response);
             if(response == 1)
             {
                 $('#' + postID + '> .postPic').attr("src", "../posts/" + postID + ".png");
             }
             else
             {
-                console.log("Hidden");
                 $('#' + postID + '> .postPic').hide();
             }
         }
