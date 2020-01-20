@@ -33,6 +33,7 @@ function request(ids, callback)
     })
 }
 
+/******************************************************** LIKES ***************************************************/
 function like(id)
 {
     console.log("Liked " + id);
@@ -43,8 +44,8 @@ function like(id)
         data: {"postID": id, "likeID": profileID, "delete": 0},
         success: function(response)
         {
-            $('#' + id + '> div > img').attr("src", "../images/like.png");
-            $('#' + id + '> div').attr("onclick", "dislike(" + id + ")");
+            $('#' + id + '> .like > img').attr("src", "../images/like.png");
+            $('#' + id + '> .like').attr("onclick", "dislike(" + id + ")");
             checkLikes(id);
         }
     })
@@ -60,8 +61,8 @@ function dislike(id)
         data: {"postID": id, "likeID": profileID, "delete": 1},
         success: function(response)
         {
-            $('#' + id + '> div > img').attr("src", "../images/dislike.png");
-            $('#' + id + '> div').attr("onclick", "like(" + id + ")");
+            $('#' + id + '> .like > img').attr("src", "../images/dislike.png");
+            $('#' + id + '> .like').attr("onclick", "like(" + id + ")");
             checkLikes(id);
         }
     })
@@ -79,21 +80,21 @@ function checkLikes(postID)
             response = JSON.parse(response);
             if(response['result'][0].length > 0)
             {
-                $('#' + postID + '> div > p').text(response['result'][0].length);
+                $('#' + postID + '> .like > p').text(response['result'][0].length);
                 for(var i = 0; i < response['result'][0].length; i++)
                 {
                     if(response['result'][0][i]["likeID"] == profileID)
                     {
-                        $('#' + postID + '> div > img').attr("src", "../images/like.png");
-                        $('#' + postID + '> div').attr("onclick", "dislike(" + postID + ")");
+                        $('#' + postID + '> .like > img').attr("src", "../images/like.png");
+                        $('#' + postID + '> .like').attr("onclick", "dislike(" + postID + ")");
                     }
                 }
             }
             else
             {
-                $('#' + postID + '> div > img').attr("src", "../images/dislike.png");
-                $('#' + postID + '> div > p').text("0");
-                $('#' + postID + '> div').attr("onclick", "like(" + postID + ")");
+                $('#' + postID + '> .like > img').attr("src", "../images/dislike.png");
+                $('#' + postID + '> .like > p').text("0");
+                $('#' + postID + '> .like').attr("onclick", "like(" + postID + ")");
             }
         }
     })
