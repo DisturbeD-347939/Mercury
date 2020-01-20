@@ -100,6 +100,65 @@ function checkLikes(postID)
     })
 }
 
+/******************************************************** COMMENTS ***************************************************/
+
+function checkComments(postID)
+{
+    $.ajax
+    ({
+        type: "POST",
+        url: "requests.php",
+        data: {"getCommentsCount": postID},
+        success: function(response)
+        {
+            response = JSON.parse(response);
+            if(response["result"][0][0]["COUNT(id)"] == 1)
+            {
+                $('#' + postID + '> .comments > p').text(response["result"][0][0]["COUNT(id)"]);
+            }
+        }
+    })
+}
+
+function showComments(postID)
+{
+    $.ajax
+    ({
+        type: "POST",
+        url: "requests.php",
+        data: {"getComments": postID},
+        success: function(response)
+        {
+            response = JSON.parse(response);
+            console.log(response["result"][0]);
+            if(response["result"][0].length > 0)
+            {
+                $('#' + postID + '> .like').css("border-bottom", "0px");
+                $('#' + postID + '> .comments').css("border-bottom", "0px");
+                $('#' + postID + ' > .commentBox').css("border-top", "1px solid #DADDE1");
+                $('#' + postID + '> .comments').attr("onclick", "hideComments(" + postID + ")");
+                $('.hiddenComments').attr("src", "../images/showComments.png");
+                for(var i = 0; i < response["result"][0].length; i++)
+                { 
+                    //MODIFYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+                    $('#' + postID + ' > .commentBox').append("<p>" + response["result"][0][0]["comment"] + "</p>");
+                }
+            }
+            
+        }
+    })
+}
+
+function hideComments(postID)
+{
+    $('#' + postID + '> .like').css("border-bottom", "1px solid #DADDE1");
+    $('#' + postID + '> .comments').css("border-bottom", "1px solid #DADDE1");
+    $('#' + postID + ' > .commentBox').css("border-top", "0px");
+    $('#' + postID + '> .comments').attr("onclick", "showComments(" + postID + ")");
+    $('.hiddenComments').attr("src", "../images/hiddenComments.png");
+    $('#' + postID + ' > .commentBox').empty();
+}
+
 function checkPhotos(postID)
 {
     $.ajax
