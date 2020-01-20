@@ -63,7 +63,10 @@ else if(@$_REQUEST["searchProfile"])
 
     $_SESSION["searchProfile"] = $result;
 
-    echo json_encode(array('result'=>$result));
+    if($_REQUEST["searchProfile"] != $_SESSION["user"]["id"])
+    {
+        echo json_encode(array('result'=>$result));
+    }
 }
 
 //Follow request
@@ -162,6 +165,18 @@ else if(@$_REQUEST["getComments"])
     echo json_encode(array('result'=>$result));
 }
 
+else if(@$_REQUEST["getPostNames"])
+{
+
+    $getNames = $db->getMultipleIDs($_REQUEST["getPostNames"]);
+
+    $i = array($_REQUEST["i"]);
+
+    $getNames[sizeof($getNames)] = $i;
+
+    echo json_encode(array('result'=>$getNames));
+}
+
 /*************************************POST REQUESTS*************************************/
 
 //Register request
@@ -240,6 +255,11 @@ else if(@$_POST['likeID'] && @$_POST['postID'])
     {
         $result = $db->add("likes", array("likeID"=>$_POST['likeID'], "postID"=>$_POST['postID']));
     }
+}
+
+else if(@$_POST['form'] && @$_POST['id'])
+{
+    $result = $db->add("comments", array("postID"=>$_POST['id'], "comment"=>$_POST['form'], "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
 }
 
 ?>
