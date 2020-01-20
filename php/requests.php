@@ -148,6 +148,20 @@ else if(@$_REQUEST["getPhoto"])
     echo $data;
 }
 
+else if(@$_REQUEST["getCommentsCount"])
+{
+    $result = $db->getCommentsCount($_REQUEST["getCommentsCount"]);
+
+    echo json_encode(array('result'=>$result));
+}
+
+else if(@$_REQUEST["getComments"])
+{
+    $result = $db->getComments($_REQUEST["getComments"]);
+
+    echo json_encode(array('result'=>$result));
+}
+
 /*************************************POST REQUESTS*************************************/
 
 //Register request
