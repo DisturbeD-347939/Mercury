@@ -208,6 +208,26 @@ class DB
         return [$result->fetchAll()];
     }
 
+    function getCommentsCount($postID)
+    {
+        $database = $this->DBConnect();
+
+        $result = $database->query("SELECT COUNT(id) FROM comments WHERE postID='$postID'");
+
+        $this->DBDisconnect($database);
+        return [$result->fetchAll()];
+    }
+
+    function getComments($postID)
+    {
+        $database = $this->DBConnect();
+
+        $result = $database->query("SELECT * FROM comments WHERE postID='$postID'");
+
+        $this->DBDisconnect($database);
+        return [$result->fetchAll()];
+    }
+
 }
 
 ?>
