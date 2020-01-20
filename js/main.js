@@ -13,7 +13,7 @@ function goToProfile(id)
         },
         error: function ()
         {
-            console.log("Error occured");
+            window.location = "../php/profile.php";
         } 
     });
 }
