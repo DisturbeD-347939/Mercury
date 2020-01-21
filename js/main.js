@@ -45,7 +45,6 @@ $('#searchBoxInput').on('keyup', function(e)
                     {
                         //Split info with spaces
                         var splitHint = hints[i].split(" ");
-
                         //Removes bugged space
                         if(splitHint.length > 4)
                         {
@@ -54,7 +53,7 @@ $('#searchBoxInput').on('keyup', function(e)
 
                         if(splitHint[0]) //If there is info, display search
                         {
-                            $('#hints').append("<div id=" + splitHint[3] + " class='searches' onclick='goToProfile(this.id)' <p>" + splitHint[0] + " " + splitHint[1] + "</p><p>" + splitHint[2] + "</p>");
+                            $('#hints').append("<div id=" + splitHint[3] + " class='searches' onclick='goToProfile(this.id)'><img src='../Users/" + splitHint[3] + "/profilePicture.png'></img><div><p>" + splitHint[0] + " " + splitHint[1] + "</p><p>" + splitHint[2] + "</p></div>");
                         }
                     }
                     //If nothing was found display error messsage
