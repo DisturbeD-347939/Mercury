@@ -102,14 +102,13 @@ class DB
 
         $result = $database->query("SELECT * FROM posts WHERE userID='$userID'");
 
+        $this->DBDisconnect($database);
         if ($result->rowCount()) 
         {
-            $this->DBDisconnect($database);
             return [1,$result->fetchAll()];
         }
         else
         {
-            $this->DBDisconnect($database);
             return [0];
         }
     }
@@ -143,14 +142,13 @@ class DB
 
         $result = $database->query("SELECT * FROM users WHERE email='$email' AND PASSWORD='$password'");
 
+        $this->DBDisconnect($database);
         if ($result->rowCount()) 
         {
-            $this->DBDisconnect($database);
             return [1,$result->fetch()];
         }
         else
         {
-            $this->DBDisconnect($database);
             return [0];
         }
     }
