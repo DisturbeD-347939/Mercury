@@ -6,6 +6,12 @@ if(!session_id())
 
 }
 
+include_once '../php/db.php';
+$db = new DB;
+
+//Get posts from user searched
+$result = $db->getPosts($_SESSION["searchProfile"]["id"]);
+
 include_once '../html/searchProfile.html';
 
 ?>
