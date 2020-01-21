@@ -184,6 +184,27 @@ else if(@$_REQUEST["getPostNames"])
     echo json_encode(array('result'=>$getNames));
 }
 
+else if(@$_REQUEST["getLastTextID"])
+{
+    $result = $db->getLastTextID($_REQUEST["getLastTextID"]);
+
+    echo json_encode(array('result'=>$result));
+}
+
+else if(@$_REQUEST["getLastText"])
+{
+    $result = $db->getLastText($_REQUEST["getLastText"]);
+
+    echo json_encode(array('result'=>$result));
+}
+
+else if(@$_REQUEST["searchTag"])
+{
+    $_SESSION["tag"] = $_REQUEST["searchTag"];
+
+    echo json_encode(array('result'=>1));
+}
+
 /*************************************POST REQUESTS*************************************/
 
 //Register request
@@ -267,6 +288,18 @@ else if(@$_POST['likeID'] && @$_POST['postID'])
 else if(@$_POST['form'] && @$_POST['id'])
 {
     $result = $db->add("comments", array("postID"=>$_POST['id'], "comment"=>$_POST['form'], "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
+}
+
+else if(@$_POST['form'] && @$_POST['id'])
+{
+    $result = $db->add("comments", array("postID"=>$_POST['id'], "comment"=>$_POST['form'], "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
+}
+
+else if(@$_POST['hashtag'] && @$_POST['id'])
+{
+    $result = $db->addTags($_POST['hashtag'], $_POST['id']);
+
+    echo json_encode(array('result'=>$result));
 }
 
 ?>
