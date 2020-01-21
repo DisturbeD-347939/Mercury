@@ -357,6 +357,66 @@ function hashtagIt(location)
     }
 }
 
+function checkHashtags()
+{
+    $.ajax
+    ({
+        type: "GET",
+        url: "requests.php",
+        data: {"getLastTextID": profileID},
+        success: function(response)
+        {
+            response = JSON.parse(response);
+            response = response["result"][0][0]["MAX(id)"];
+            $.ajax
+            ({
+                type: "GET",
+                url: "requests.php",
+                data: {"getLastText": response},
+                success: function(response)
+                {
+                    response = JSON.parse(response);
+                    response = response["result"][0][0];
+                    var hashtag = "";
+                    for(var j = 0; j <= response["title"].length; j++)
+                    {
+                        if(response["title"][j] == "#")
+                        {
+                            if(hashtag != "")
+                            {
+                                hashtag += " ";
+                            }
+                            while(response["title"][j] != " " && response["title"][j] != "\n" && response["title"].length > j && response["title"][j] != "undefined")
+                            { 
+                                hashtag += response["title"][j];
+                                j++;
+                            }
+                        }
+                        if(response["title"].length == j && hashtag != "")
+                        {
+                            if(hashtag[hashtag.length-1] == " ") hashtag = hashtag.substring(0, hashtag.length - 1);
+                            console.log(hashtag + " | " + response["id"]);
+                            $.ajax
+                            ({
+                                type: "POST",
+                                url: "requests.php",
+                                data: {"hashtag": hashtag, "id": response["id"]},
+                                success: function(response)
+                                {
+                                    console.log(response);
+                                }
+                            })
+                        }
+                    }
+                }
+            })
+        }
+    })
+}
+
+/******************************************************** MISCELLANEOUS ***************************************************/
+
+
 
 function checkPhotos(postID)
 {
