@@ -50,8 +50,15 @@ if(@$_REQUEST["search"])
 else if(@$_REQUEST["del"])
 {
     $q = $_REQUEST['del'];
-    
-    $result = $db->delete("posts", array("id"=> $q));
+
+    if($_REQUEST['post'])
+    {
+        $result = $db->delete("posts", array("id"=> $q));
+    }
+    else
+    {
+        $result = $db->delete("comments", array("id"=> $q));
+    }
 
     echo json_encode(array('result'=>$result));
 }
