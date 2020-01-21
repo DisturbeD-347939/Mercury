@@ -256,6 +256,50 @@ function hideComments(postID)
     $('#' + postID + ' > .commentBox').empty();
 }
 
+/******************************************************** HASHTAGS ***************************************************/
+
+//Turn text into hashtags
+function hashtagIt(location)
+{
+    var titleContent = $(location).last().children('h3').text();
+    if(titleContent[titleContent.length-1] == " ") titleContent = titleContent.substring(0, titleContent.length - 1);
+    var hashtag = "";
+    for(var j = 0; j <= titleContent.length; j++)
+    {
+        if(titleContent[j] == "#")
+        {
+            if(hashtag != "")
+            {
+                hashtag += " ";
+            }
+            while(titleContent[j] != " " && titleContent[j] != "\n" && titleContent.length > j && titleContent[j] != "undefined")
+            { 
+                hashtag += titleContent[j];
+                j++;
+            }
+        }
+        if(titleContent.length == j && hashtag != "")
+        {
+            j = 9999;
+            if(hashtag[hashtag.length-1] == " ") hashtag = hashtag.substring(0, hashtag.length - 1);
+            if(hashtag.indexOf(" ") >= 0)
+            {
+                var hashtags = hashtag.split(" ");
+                for(var k = 0; k < hashtags.length; k++)
+                {
+                    titleContent = titleContent.replace(hashtags[k], "<span onclick=searchTag('" + hashtags[k] + "')><mark>" + hashtags[k] + "</mark></span>");
+                    $(location).last().children('h3').html(titleContent);
+                }
+            }
+            else
+            {
+                titleContent = titleContent.replace(hashtag, "<span onclick=searchTag('" + hashtag + "')><mark>" + hashtag + "</mark></span>");
+                $(location).last().children('h3').html(titleContent);
+            }
+            hashtag = "";
+        }
+    }
+}
 
 
 function checkPhotos(postID)
