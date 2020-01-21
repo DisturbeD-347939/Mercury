@@ -226,6 +226,47 @@ class DB
         return [$result->fetchAll()];
     }
 
+    function getLastTextID($userID)
+    {
+        $database = $this->DBConnect();
+
+        $result = $database->query("SELECT MAX(id) FROM posts WHERE userID='$userID'");
+
+        $this->DBDisconnect($database);
+        return [$result->fetchAll()];
+    }
+
+    function getLastText($id)
+    {
+        $database = $this->DBConnect();
+
+        $result = $database->query("SELECT * FROM posts WHERE id='$id'");
+
+        $this->DBDisconnect($database);
+        return [$result->fetchAll()];
+    }
+
+    function addTags($tags, $id)
+    {
+        $database = $this->DBConnect();
+        
+        $result = $database->query("UPDATE posts SET hashtags='$tags' WHERE id='$id'");
+
+        $this->DBDisconnect($database);
+
+        echo $id;
+    }
+
+    //Get posts from a user
+    function getTags()
+    {
+        $database = $this->DBConnect();
+
+        $result = $database->query("SELECT * FROM posts WHERE hashtags IS NOT NULL");
+
+        $this->DBDisconnect($database);
+        return [$result->fetchAll()];
+    }
 }
 
 ?>
