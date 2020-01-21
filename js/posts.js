@@ -114,8 +114,11 @@ function checkComments(postID)
             response = JSON.parse(response);
             if(response["result"][0][0]["COUNT(id)"] >= 1)
             {
-                console.log(response["result"][0][0]["COUNT(id)"]);
                 $('#' + postID + '> .comments > p').text(response["result"][0][0]["COUNT(id)"]);
+            }
+            else
+            {
+                $('#' + postID + '> .comments > p').text("0");
             }
         }
     })
@@ -186,6 +189,7 @@ function showComments(postID)
                                         {
                                             $('#' + postID + ' > .commentBox').empty();
                                             showComments(postID);
+                                            checkComments(postID);
                                         }
                                     })
                                 });
