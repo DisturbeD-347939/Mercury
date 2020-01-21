@@ -18,6 +18,26 @@ function goToProfile(id)
     });
 }
 
+function searchTag(tag)
+{
+    $.ajax
+    ({
+        type: 'GET',
+        url: 'requests.php',
+        contentType: 'application/json; charset=utf-8',
+        data: {"searchTag":tag},
+        dataType: 'json',
+        success: function (response)
+        {
+            window.location = "../php/searchTag.php";
+        },
+        error: function (response)
+        {
+            window.location = "../php/profile.php";
+        } 
+    });
+}
+
 //Search bar function
 $('#searchBoxInput').on('keyup', function(e)
 {
@@ -70,3 +90,4 @@ $('#searchBoxInput').on('keyup', function(e)
             });
         }
     }
+});
