@@ -160,8 +160,7 @@ function showComments(postID)
                             $('#' + postID + ' > .commentBox').append("<div class='comment'><div><img src='../Users/" + comments[counter]["userID"] + "/profilePicture.png'></img><p onclick='goToProfile(" + comments[counter]["userID"] + ")'>" + names[0][0]["first_name"] + " " + names[0][0]["surname"] + "</p></div><div><p>" + comments[counter]["comment"] + "</p><p>" + date + "</p></div></div>");
 
                             
-                            var trigger = comments.length - 1;
-                            if(counter == trigger)
+                            if($('#' + postID + ' > .commentBox > div').length == (comments.length))
                             {
                                 var form = "<form method='post'><textarea name='text' required></textarea><input type='submit' value='Comment'></form>";
 
