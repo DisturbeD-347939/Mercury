@@ -41,6 +41,8 @@ function buildPosts(callback)
     })
 }
 
+
+
 //Get all userID's
 function parseIDs(ids, callback)
 {
@@ -71,6 +73,7 @@ $('#postFormFeed').submit(function(e)
         data: $(this).serialize(),
         success: function(response)
         {
+            checkHashtags();
             $('#feedPosts').empty();
             buildPosts(function(timestamps)
             {
