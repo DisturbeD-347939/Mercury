@@ -132,13 +132,13 @@ function showComments(postID)
         {
             comments = JSON.parse(comments);
             comments = comments["result"][0];
+            $('#' + postID + '> .like').css("border-bottom", "0px");
+            $('#' + postID + '> .comments').css("border-bottom", "0px");
+            $('#' + postID + ' > .commentBox').css("border-top", "1px solid #DADDE1");
+            $('#' + postID + '> .comments').attr("onclick", "hideComments(" + postID + ")");
+            $('#' + postID + '> .comments > .hiddenComments').attr("src", "../images/showComments.png");
             if(comments.length > 0)
             {
-                $('#' + postID + '> .like').css("border-bottom", "0px");
-                $('#' + postID + '> .comments').css("border-bottom", "0px");
-                $('#' + postID + ' > .commentBox').css("border-top", "1px solid #DADDE1");
-                $('#' + postID + '> .comments').attr("onclick", "hideComments(" + postID + ")");
-                $('#' + postID + '> .comments > .hiddenComments').attr("src", "../images/showComments.png");
                 for(var i = 0; i < comments.length; i++)
                 { 
                     $.ajax
@@ -157,9 +157,15 @@ function showComments(postID)
                             //Set date to when post was created
                             date = date.getHours() + ":" + date.getMinutes() + " " + date.getDate() + "." + date.getMonth()+1 + "." +date.getFullYear();
 
-                            $('#' + postID + ' > .commentBox').append("<div class='comment'><div><img src='../Users/" + comments[counter]["userID"] + "/profilePicture.png'></img><p onclick='goToProfile(" + comments[counter]["userID"] + ")'>" + names[0][0]["first_name"] + " " + names[0][0]["surname"] + "</p></div><div><p>" + comments[counter]["comment"] + "</p><p>" + date + "</p></div></div>");
-
-                            
+                            if(comments[counter]["userID"] == profileID)
+                            {
+                                $('#' + postID + ' > .commentBox').append("<div class='comment id='" + comments[counter]["id"] + "'><div><img src='../Users/" + comments[counter]["userID"] + "/profilePicture.png'></img><p onclick='goToProfile(" + comments[counter]["userID"] + ")'>" + names[0][0]["first_name"] + " " + names[0][0]["surname"] + "</p></div><div><p>" + comments[counter]["comment"] + "</p><p>" + date + "</p></div><button onclick='deleteComment(" + comments[counter]["id"] + "," + postID + ")'></button></div>");
+                            }
+                            else
+                            {
+                                $('#' + postID + ' > .commentBox').append("<div class='comment' id='" + comments[counter]["id"] + "'><div><img src='../Users/" + comments[counter]["userID"] + "/profilePicture.png'></img><p onclick='goToProfile(" + comments[counter]["userID"] + ")'>" + names[0][0]["first_name"] + " " + names[0][0]["surname"] + "</p></div><div><p>" + comments[counter]["comment"] + "</p><p>" + date + "</p></div></div>");
+                            }
+                                
                             if($('#' + postID + ' > .commentBox > div').length == (comments.length))
                             {
                                 var form = "<form method='post'><textarea name='text' required></textarea><input type='submit' value='Comment'></form>";
@@ -187,6 +193,28 @@ function showComments(postID)
                         }
                     })
                 }
+            }
+            //No comments
+            else
+            {
+                var form = "<form method='post'><textarea name='text' required></textarea><input type='submit' value='Comment'></form>";
+                $('#' + postID + ' > .commentBox').append(form);
+
+                $('#' + postID + ' > .commentBox > form').submit(function(e)
+                {
+                    e.preventDefault();
+                    $.ajax
+                    ({
+                        type: "POST",
+                        url: "requests.php",
+                        data: {"form": $(this)[0][0]["value"], "id": postID},
+                        success: function(response)
+                        {
+                            $('#' + postID + ' > .commentBox').empty();
+                            showComments(postID);
+                        }
+                    })
+                });
             }
         }
     })
