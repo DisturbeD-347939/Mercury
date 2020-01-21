@@ -15,48 +15,7 @@ function run()
         for(var i = 0; i < timestamps.length; i++)
         {
             $('#feedPosts').append(timestamps[i][1]);
-
-            var titleContent = $('#feedPosts > div').last().children('h3').text();
-            if(titleContent[titleContent.length-1] == " ") titleContent = titleContent.substring(0, titleContent.length - 1);
-            var hashtag = "";
-            for(var j = 0; j <= titleContent.length; j++)
-            {
-                if(titleContent[j] == "#")
-                {
-                    if(hashtag != "")
-                    {
-                        hashtag += " ";
-                    }
-                    while(titleContent[j] != " " && titleContent[j] != "\n" && titleContent.length > j && titleContent[j] != "undefined")
-                    { 
-                        hashtag += titleContent[j];
-                        //console.log(hashtag);
-                        j++;
-                    }
-                }
-                //console.log(titleContent.length + " | " + j);
-                if(titleContent.length == j && hashtag != "")
-                {
-                    j = 9999;
-                    console.log("Got hashtag -> " + hashtag);
-                    if(hashtag[hashtag.length-1] == " ") hashtag = hashtag.substring(0, hashtag.length - 1);
-                    if(hashtag.indexOf(" ") >= 0)
-                    {
-                        var hashtags = hashtag.split(" ");
-                        for(var k = 0; k < hashtags.length; k++)
-                        {
-                            titleContent = titleContent.replace(hashtags[k], "<span onclick=searchTag('" + hashtags[k] + "')><mark>" + hashtags[k] + "</mark></span>");
-                            $('#feedPosts > div').last().children('h3').html(titleContent);
-                        }
-                    }
-                    else
-                    {
-                        titleContent = titleContent.replace(hashtag, "<span onclick=searchTag('" + hashtag + "')><mark>" + hashtag + "</mark></span>");
-                        $('#feedPosts > div').last().children('h3').html(titleContent);
-                    }
-                    hashtag = "";
-                }
-            }
+            hashtagIt('#feedPosts > div');
         }
     })
 }
@@ -162,6 +121,7 @@ $('#postFormFeed').submit(function(e)
                 for(var i = 0; i < timestamps.length; i++)
                 {
                     $('#feedPosts').append(timestamps[i][1]);
+                    hashtagIt('#feedPosts > div');
                 }
             })
         }
