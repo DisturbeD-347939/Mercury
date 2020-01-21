@@ -69,6 +69,7 @@ $('#postFormProfile').submit(function(e)
         data: $(this).serialize(),
         success: function(response)
         {
+            checkHashtags();
             var jsonResponse = JSON.parse(response);
             posts = jsonResponse["result"];
 
