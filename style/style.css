@@ -105,7 +105,8 @@ header {
     border-bottom: 1px solid lightgrey; }
 
 #hints {
-  position: absolute; }
+  position: absolute;
+  border: 1px solid lightgrey; }
 
 .post {
   display: grid;
@@ -116,6 +117,7 @@ header {
   margin: auto;
   width: 45%;
   border-radius: 1%;
+  border: 1px lightgrey solid;
   background-color: white; }
   .post .profilePic {
     grid-column: 1;
