@@ -224,7 +224,27 @@ function showComments(postID)
     })
 }
 
-/******************************************************** MISCELLANEOUS ***************************************************/
+function deleteComment(id, postID)
+{
+    $.ajax
+    ({
+        type: 'GET',
+        url: 'requests.php',
+        contentType: 'application/json; charset=utf-8',
+        data: {"del":id, "post": 0},
+        dataType: 'json',
+        success: function ()
+        {
+            $('#' + postID + ' > .commentBox').empty();
+            showComments(postID);
+            checkComments(postID);
+        },
+        error: function ()
+        {
+            console.log("Error occured");
+        } 
+    });
+}
 
 function hideComments(postID)
 {
@@ -277,27 +297,6 @@ function deletePost(id)
         success: function ()
         {
             $("#" + id).hide();
-        },
-        error: function ()
-        {
-            console.log("Error occured");
-        } 
-    });
-}
-
-function deleteComment(id, postID)
-{
-    $.ajax
-    ({
-        type: 'GET',
-        url: 'requests.php',
-        contentType: 'application/json; charset=utf-8',
-        data: {"del":id, "post": 0},
-        dataType: 'json',
-        success: function ()
-        {
-            $('#' + postID + ' > .commentBox').empty();
-            showComments(postID);
         },
         error: function ()
         {
