@@ -220,6 +220,8 @@ function showComments(postID)
     })
 }
 
+/******************************************************** MISCELLANEOUS ***************************************************/
+
 function hideComments(postID)
 {
     $('#' + postID + '> .like').css("border-bottom", "1px solid #DADDE1");
@@ -229,6 +231,8 @@ function hideComments(postID)
     $('.hiddenComments').attr("src", "../images/hiddenComments.png");
     $('#' + postID + ' > .commentBox').empty();
 }
+
+
 
 function checkPhotos(postID)
 {
@@ -264,11 +268,32 @@ function deletePost(id)
         type: 'GET',
         url: 'requests.php',
         contentType: 'application/json; charset=utf-8',
-        data: {"del":id},
+        data: {"del":id, "post": 1},
         dataType: 'json',
         success: function ()
         {
             $("#" + id).hide();
+        },
+        error: function ()
+        {
+            console.log("Error occured");
+        } 
+    });
+}
+
+function deleteComment(id, postID)
+{
+    $.ajax
+    ({
+        type: 'GET',
+        url: 'requests.php',
+        contentType: 'application/json; charset=utf-8',
+        data: {"del":id, "post": 0},
+        dataType: 'json',
+        success: function ()
+        {
+            $('#' + postID + ' > .commentBox').empty();
+            showComments(postID);
         },
         error: function ()
         {
