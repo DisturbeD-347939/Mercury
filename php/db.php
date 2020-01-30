@@ -435,10 +435,30 @@ class DB
         $this->DBDisconnect($database);
     }
 
+    function checkCode($code)
     {
+
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT * FROM posts WHERE hashtags IS NOT NULL");
+        $sql = "SELECT reset FROM users WHERE reset=:code";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'code' => $code
+        ]);
+
+        $this->DBDisconnect($database);
+        
+        if ($result->rowCount()) 
+        {
+            return [1,$result->fetchAll()];
+        }
+        else
+        {
+            return [0];
+        }
+    }
 
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
