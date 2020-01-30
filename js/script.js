@@ -36,11 +36,11 @@ function displayPosts()
                     
                     if(!searching)
                     {
-                        tempArray.push("<div class='post userPost' id=" + data[0]["result"][0][i]["id"] + "><img class='profilePic' src='" + data[2]["result"][0][1] + "'></img><h2>" +  data[1]["result"][0][0]["first_name"] + " " + data[1]["result"][0][0]["surname"] + "</h2><h3>" +data[0]["result"][0][i]["title"] + "</h3><p class='content'>" + data[0]["result"][0][i]["content"] + "</p><p class='date'><small>" + date + "</small></p><img class='postPic'><div class='like postButtons' onclick=like(" + data[0]["result"][0][i]["id"] + ")></img><img class='postLike' src='../images/dislike.png'></img><p>0</p></div><div class='comments postButtons' onclick=showComments(" + data[0]["result"][0][i]["id"] + ")><img class='hiddenComments' src='../images/hiddenComments.png'></img><p>0</p></div><button onclick='deletePost(" + data[0]["result"][0][i]["id"] + ")'></button><div class='commentBox'></div></div>");
+                        tempArray.push("<div class='post userPost' id=" + data[0]["result"][0][i]["id"] + "><img class='profilePic' src='" + data[2]["result"][0][1] + "'></img><h2>" +  data[1]["result"][0][0]["first_name"] + " " + data[1]["result"][0][0]["surname"] + "</h2><h3>" + escapeHtml(data[0]["result"][0][i]["title"]) + "</h3><p class='content'>" + escapeHtml(data[0]["result"][0][i]["content"]) + "</p><p class='date'><small>" + date + "</small></p><img class='postPic'><div class='like postButtons' onclick=like(" + data[0]["result"][0][i]["id"] + ")></img><img class='postLike' src='../images/dislike.png'></img><p>0</p></div><div class='comments postButtons' onclick=showComments(" + data[0]["result"][0][i]["id"] + ")><img class='hiddenComments' src='../images/hiddenComments.png'></img><p>0</p></div><button onclick='deletePost(" + data[0]["result"][0][i]["id"] + ")'></button><div class='commentBox'></div></div>");
                     }
                     else
                     {
-                        tempArray.push("<div class='post userPost' id=" + data[0]["result"][0][i]["id"] + "><img class='profilePic' src='" + data[2]["result"][0][1] + "'></img><h2>" +  data[1]["result"][0][0]["first_name"] + " " + data[1]["result"][0][0]["surname"] + "</h2><h3>" +data[0]["result"][0][i]["title"] + "</h3><p class='content'>" + data[0]["result"][0][i]["content"] + "</p><p class='date'><small>" + date + "</small></p><div class='like postButtons' onclick=like(" + data[0]["result"][0][i]["id"] + ")><img class='postLike' src='../images/dislike.png'></img><p>0</p></div><div class='comments postButtons' onclick=showComments(" + data[0]["result"][0][i]["id"] + ")><img class='hiddenComments' src='../images/hiddenComments.png'></img><p>0</p></div><div class='commentBox'></div></div>");
+                        tempArray.push("<div class='post userPost' id=" + data[0]["result"][0][i]["id"] + "><img class='profilePic' src='" + data[2]["result"][0][1] + "'></img><h2>" +  data[1]["result"][0][0]["first_name"] + " " + data[1]["result"][0][0]["surname"] + "</h2><h3>" + escapeHtml(data[0]["result"][0][i]["title"]) + "</h3><p class='content'>" + escapeHtml(data[0]["result"][0][i]["content"]) + "</p><p class='date'><small>" + date + "</small></p><div class='like postButtons' onclick=like(" + data[0]["result"][0][i]["id"] + ")><img class='postLike' src='../images/dislike.png'></img><p>0</p></div><div class='comments postButtons' onclick=showComments(" + data[0]["result"][0][i]["id"] + ")><img class='hiddenComments' src='../images/hiddenComments.png'></img><p>0</p></div><div class='commentBox'></div></div>");
                     }
     
                     timestamps.push(tempArray);
@@ -92,7 +92,6 @@ $('#postFormProfile').submit(function(e)
                     type: 'post',
                     success: function(data)
                     {
-                        console.log("Done");
                         displayPosts();
                     }
                 });
