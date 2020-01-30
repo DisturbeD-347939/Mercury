@@ -401,10 +401,23 @@ class DB
         return [$result->fetchAll()];
     }
 
+    function checkEmail($email)
+    {
+        $database = $this->DBConnect();
+
+        $sql = "SELECT email FROM users WHERE email=:email";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'email' => $email
+        ]);
         
-        $result = $database->query("UPDATE posts SET hashtags='$tags' WHERE id='$id'");
+        //$result = $database->prepare("UPDATE posts SET hashtags='$tags' WHERE id='$id'");
 
         $this->DBDisconnect($database);
+        return [$result->fetchAll()];
+    }
 
         echo $id;
     }
