@@ -103,6 +103,7 @@ else if(@$_REQUEST["followerID"] && @$_REQUEST["userID"])
 //Get posts from user request
 else if(@$_REQUEST["getPosts"])
 {
+
     $result = $db->getMultiplePosts($_REQUEST["getPosts"]);
 
     echo json_encode(array('result'=>$result));
@@ -203,6 +204,20 @@ else if(@$_REQUEST["searchTag"])
     $_SESSION["tag"] = $_REQUEST["searchTag"];
 
     echo json_encode(array('result'=>1));
+}
+
+else if(@$_REQUEST["resetCode"])
+{
+    $result = $db->checkCode(strval($_REQUEST["resetCode"]));
+
+    if($result[0])
+    {
+        include '../html/recover_password.html';
+    }
+    else
+    {
+        header('Location: ../Mercury%20Deploy/index.php');
+    }
 }
 
 /*************************************POST REQUESTS*************************************/
