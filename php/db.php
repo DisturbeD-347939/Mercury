@@ -419,11 +419,22 @@ class DB
         return [$result->fetchAll()];
     }
 
-        echo $id;
+    function createReset($code, $email)
+    {
+        $database = $this->DBConnect();
+
+        $sql = "UPDATE users SET reset=:code WHERE email=:email";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'code' => $code, 
+            'email' => $email
+        ]);
+
+        $this->DBDisconnect($database);
     }
 
-    //Get posts from a user
-    function getTags()
     {
         $database = $this->DBConnect();
 
