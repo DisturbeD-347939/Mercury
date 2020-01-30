@@ -50,7 +50,15 @@ class DB
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT first_name, surname, username, id FROM users WHERE id != $id");
+        $sql = "SELECT first_name, surname, username, id FROM users WHERE id != :id";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'id' => $id
+        ]);
+
+        //$result = $database->prepare("SELECT first_name, surname, username, id FROM users WHERE id != $id");
 
         $this->DBDisconnect($database);
         return $result->fetchAll();
@@ -61,7 +69,15 @@ class DB
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT * FROM users WHERE id = $id");
+        $sql = "SELECT * FROM users WHERE id = :id";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'id' => $id
+        ]);
+
+        //$result = $database->prepare("SELECT * FROM users WHERE id = $id");
 
         $this->DBDisconnect($database);
         return $result->fetch();
@@ -100,9 +116,18 @@ class DB
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT * FROM posts WHERE userID='$userID'");
+        $sql = "SELECT * FROM posts WHERE userID=:userID";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'userID' => $userID,
+        ]);
+
+        //$result = $database->prepare("SELECT * FROM posts WHERE userID='$userID'");
 
         $this->DBDisconnect($database);
+
         if ($result->rowCount()) 
         {
             return [1,$result->fetchAll()];
@@ -121,7 +146,16 @@ class DB
         $found = [];
         foreach($data as $k => $v)
         {
-            $result = $database->query("SELECT * FROM users WHERE $k='$v'");
+            $sql = "SELECT * FROM users WHERE :k=:v";
+
+            $result = $database->prepare($sql);
+
+            $result->execute([
+                'k' => $k,
+                'v' => $v
+            ]);
+
+            //$result = $database->prepare("SELECT * FROM users WHERE $k='$v'");
             if ($result->rowCount()) 
             {
                 if($k == "username" || $k == "email")
@@ -136,11 +170,20 @@ class DB
     }
 
     //Login into the website 
-    function login($email, $password)
+    function login($email, $pass)
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT * FROM users WHERE email='$email' AND PASSWORD='$password'");
+        $sql = "SELECT * FROM users WHERE email=:email AND password=:pass";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'email' => $email,
+            'pass' => $pass
+        ]);
+
+        //$result = $database->prepare("SELECT * FROM users WHERE email='$email' AND PASSWORD='$password'");
 
         $this->DBDisconnect($database);
         if ($result->rowCount()) 
@@ -158,7 +201,16 @@ class DB
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT * FROM follows WHERE followerID='$followerID' AND userID='$userID'");
+        $sql = "SELECT * FROM follows WHERE followerID=:followerID AND userID=:userID";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'followerID' => $followerID,
+            'userID' => $userID
+        ]);
+
+        //$result = $database->prepare("SELECT * FROM follows WHERE followerID='$followerID' AND userID='$userID'");
 
         $this->DBDisconnect($database);
         return $result->fetch();
@@ -169,7 +221,15 @@ class DB
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT userID FROM follows WHERE followerID='$id'");
+        $sql = "SELECT userID FROM follows WHERE followerID=:id";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'id' => $id
+        ]);
+
+        //$result = $database->prepare("SELECT userID FROM follows WHERE followerID='$id'");
 
         $this->DBDisconnect($database);
         return $result->fetchAll();
@@ -178,9 +238,19 @@ class DB
     //Get multiple posts from users
     function getMultiplePosts($userIDs)
     {
+        $userIDs = explode(",", $userIDs);
+
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT * FROM posts WHERE userID IN ($userIDs)");
+        $in = str_repeat('?,', count($userIDs) - 1) . '?';
+
+        $sql = "SELECT * FROM posts WHERE userID IN ($in)";
+
+        $result = $database->prepare($sql);
+
+        $result->execute($userIDs);
+
+        //$result = $database->prepare("SELECT * FROM posts WHERE userID IN ($userIDs)");
 
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
@@ -188,9 +258,19 @@ class DB
 
     function getMultipleIDs($userIDs)
     {
+        $userIDs = explode(",", $userIDs);
+
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT * FROM users WHERE id IN ($userIDs)");
+        $in = str_repeat('?,', count($userIDs) - 1) . '?';
+
+        $sql = "SELECT * FROM users WHERE id IN ($in)";
+
+        $result = $database->prepare($sql);
+
+        $result->execute($userIDs);
+
+        //$result = $database->prepare("SELECT * FROM users WHERE id IN ($userIDs)");
 
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
@@ -200,7 +280,15 @@ class DB
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT * FROM likes WHERE postID='$postID'");
+        $sql = "SELECT * FROM likes WHERE postID=:postID";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'postID' => $postID
+        ]);
+
+        //$result = $database->prepare("SELECT * FROM likes WHERE postID='$postID'");
 
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
@@ -210,7 +298,15 @@ class DB
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT COUNT(id) FROM comments WHERE postID='$postID'");
+        $sql = "SELECT COUNT(id) FROM comments WHERE postID=:postID";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'postID' => $postID
+        ]);
+
+        //$result = $database->prepare("SELECT COUNT(id) FROM comments WHERE postID='$postID'");
 
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
@@ -220,7 +316,15 @@ class DB
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT * FROM comments WHERE postID='$postID'");
+        $sql = "SELECT * FROM comments WHERE postID=:postID";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'postID' => $postID
+        ]);
+
+        //$result = $database->prepare("SELECT * FROM comments WHERE postID='$postID'");
 
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
@@ -230,7 +334,15 @@ class DB
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT MAX(id) FROM posts WHERE userID='$userID'");
+        $sql = "SELECT MAX(id) FROM posts WHERE userID=:userID";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'userID' => $userID
+        ]);
+
+        //$result = $database->prepare("SELECT MAX(id) FROM posts WHERE userID='$userID'");
 
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
@@ -240,15 +352,55 @@ class DB
     {
         $database = $this->DBConnect();
 
-        $result = $database->query("SELECT * FROM posts WHERE id='$id'");
+        $sql = "SELECT * FROM posts WHERE id=:id";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'id' => $id
+        ]);
+
+        //$result = $database->prepare("SELECT * FROM posts WHERE id='$id'");
 
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
     }
 
-    function addTags($tags, $id)
+    //function addTags($tags, $id)
+    //{
+    //    $database = $this->DBConnect();
+    //
+    //    $sql = "UPDATE posts SET hashtags=:tags WHERE id=:id";
+    //
+    //    $result = $database->prepare($sql);
+    //
+    //    $result->execute([
+    //        'tags' => $tags,
+    //        'id' => $id
+    //    ]);
+    //    
+    //    //$result = $database->prepare("UPDATE posts SET hashtags='$tags' WHERE id='$id'");
+    //
+    //    $this->DBDisconnect($database);
+    //}
+
+    //Get posts from a user
+    function getTags()
     {
         $database = $this->DBConnect();
+
+        $sql = "SELECT * FROM posts WHERE hashtags IS NOT NULL";
+
+        $result = $database->prepare($sql);
+
+        $result->execute();
+
+        //$result = $database->prepare("SELECT * FROM posts WHERE hashtags IS NOT NULL");
+
+        $this->DBDisconnect($database);
+        return [$result->fetchAll()];
+    }
+
         
         $result = $database->query("UPDATE posts SET hashtags='$tags' WHERE id='$id'");
 
