@@ -40,7 +40,8 @@
     var posts = <?= json_encode($result) ?>;
     var searching = 1;
     var userID = <?= $_SESSION["searchProfile"]["id"] ?>;
-    var followerID = <?= $_SESSION["user"]["id"] ?>
+    var followerID = <?= $_SESSION["user"]["id"] ?>;
+    var profileID = <?= $_SESSION["user"]["id"] ?>;
 </script>
 <script src="../js/script.js"></script>
 <script src="../js/searchProfile.js"></script> 
