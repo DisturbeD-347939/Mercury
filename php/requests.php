@@ -317,4 +317,30 @@ else if(@$_POST['hashtag'] && @$_POST['id'])
     echo json_encode(array('result'=>$result));
 }
 
+else if(@$_POST['forgot'])
+{
+    $result = $db->checkEmail($_POST['forgot']);
+
+    echo($result[0][0]["email"]);
+
+    if($result[0][0]["email"] != "")
+    {
+        $code = rand() * rand();
+
+        $db->createReset($code, $result[0][0]["email"]);
+
+        $msg = "Someone requested to change the password using this email\nClick the link below if this was you, if not, contact the team at Mercury\nhttp:\\ricardo.webappscc.com/Mercury%20Deploy/php/requests.php?resetCode=" . strval($code);
+
+        $msg = wordwrap($msg,70);
+
+        mail($result[0][0]["email"],"Reset password at Mercury",$msg);
+
+        header('Location: ../index.php');
+    }
+    else
+    {
+        header('Location: ../html/forgotten_password.html');
+    }
+    
+}
 ?>
