@@ -460,8 +460,28 @@ class DB
         }
     }
 
+    function changePassword($pass, $code)
+    {
+        $database = $this->DBConnect();
+
+        $code = str_replace(' ', '', $code);
+
+        $code = strval($code);
+
+        //$result = $database->query("UPDATE users SET password=$pass WHERE reset=$code");
+
+        $sql = "UPDATE users SET password=:pass , reset=NULL WHERE reset=:code";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'code' => $code, 
+            'pass' => $pass
+        ]);
+
+        var_dump($result);
+
         $this->DBDisconnect($database);
-        return [$result->fetchAll()];
     }
 }
 
