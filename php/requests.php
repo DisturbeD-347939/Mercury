@@ -343,4 +343,13 @@ else if(@$_POST['forgot'])
     }
     
 }
+
+else if(@$_POST['recover'])
+{
+    $result = $db->changePassword(hash('sha256', $_POST['recover']["password"]), $_POST['recover']["reset"]);
+
+    echo("Password changed");
+    include '../php/login_form.php';
+}
+
 ?>
