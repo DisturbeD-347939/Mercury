@@ -558,6 +558,21 @@ class DB
         return $result;
     }
 
+    function getUserAndComments($id) //INNER JOIN FUNCTION TO GET ALL THE USER INFO AND HIS COMMENTS
+    {
+        $database = $this->DBConnect();
+
+        $sql = "SELECT * FROM posts INNER JOIN users ON :id = 'posts.userID' AND :id = 'users.id'";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'id' => $id, 
+        ]);
+
+        $this->DBDisconnect($database);
+        return $result;
+    }
 }
 
 ?>
