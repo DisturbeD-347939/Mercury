@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html>
+    <head>
+        <title>Settings</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="../style/style.css">
+        <link rel="shortcut icon" type="image/png" href="../images/logo.png"/>
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    </head>
+    <body>
+        <header class="sticky">
+            <img src="../images/logo.png">
+            <div id="searchBox">
+                <input type="text" id="searchBoxInput" placeholder="Search a profile...">
+                <div id="hints"></div>
+            </div>
+            <nav>
+                <ul>
+                    <li><button onclick="window.location.href = '../php/profile.php'">Profile</button></li>
+                    <li><button onclick="window.location.href = '../php/feed.php'">Home</button></li>
+                    <li><button onclick="window.location.href = '../php/settings.php'">Settings</button></li>
+                </ul>
+            </nav>
+        </header> 
+        <div class="centerBox" id="homePage">
+            <h1 class="title">Settings</h1>
+            <form id="fileForm" action="uploadProfPic.php" method="POST" enctype="multipart/form-data">
+                <p>Update your profile picture</p>
+                <input id="inputFile" type="file" name="profilePicture" id="profilePicture" label="" required>
+                <input class="buttonStyle" type="submit" value="Upload image" name="submitPic">
+            </form>
+            <button class="buttonStyle" onclick="window.location.href='../html/delete_account.html'">Delete account</button>
+            <button class="buttonStyle" onclick="window.location.href='../php/logout.php'">Log out</button>
+        </div>
+    </body>
+</html>
+<script src="../js/main.js"></script>
