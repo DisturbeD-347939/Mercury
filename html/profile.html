@@ -41,8 +41,7 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
 
     <p id="txtHint"></p>
     <img id="profilePic" src="../Users/<?php echo $_SESSION['user']['id']?>/profilePicture.png">
-    <h1>This is your profile <?php echo $_SESSION['user']['first_name'] ?></h1>
-    <p>Enjoy your homepage!
+    <h1><?php echo $_SESSION['user']['first_name']; echo " "; echo $_SESSION['user']['surname'] ?></h1>
 
     <form action="uploadProfPic.php" method="POST" enctype="multipart/form-data">
         Select image to upload:
