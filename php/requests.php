@@ -266,8 +266,8 @@ else if(@$_POST['post'])
 //Delete account request
 else if(@$_POST['deleteAccount'])
 {
-    $db->delete("users", array("username"=>$_SESSION["user"]["username"]));
-    header('Location: ../Mercury%20Deploy/index.php');
+    $db->deleteAll($_SESSION["user"]["id"]);
+    header('Location: ../index.php');
 }
 
 //Log in request
