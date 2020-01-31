@@ -2,11 +2,11 @@
 
 class DB
 {
-    private $host           = 'localhost';
+    private $host           = '91.103.219.224';
     private $port           = '3306';
-    private $db             = 'social_media';
-    private $username       = 'root';
-    private $password       =  null;
+    private $db             = 'webapps1_ricardo';
+    private $username       = 'webapps1_ricardo';
+    private $password       = 'c8ZX34Mv4';
     private $charset        = 'utf8';
     private $dsn;
 
