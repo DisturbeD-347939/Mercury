@@ -10,12 +10,14 @@
     </head>
 
     <body>
-        <div>
-            <h2>Are you sure you want to delete your account?</h2>
-            <form action="../php/requests.php" method="POST">
-                <input type="submit" name="deleteAccount" value="Yes, I'm tired of this!"/>
-            </form>
-            <button onclick="window.location.href='../php/profile.php'">No, I wish to stay!</button>
+        <div class="centerBox">
+            <h1 class="title">Are you sure you want to delete your account?</h2>
+            <div id="deleteAccountForm">
+                <form action="../php/requests.php" method="POST">
+                    <input class="buttonStyle" type="submit" name="deleteAccount" value="Yes, I'm tired of this!"/>
+                </form>
+                <button class="buttonStyle" onclick="window.location.href='../php/profile.php'">No, I wish to stay!</button>
+            </div>
         </div>
     </body>
 </html>
