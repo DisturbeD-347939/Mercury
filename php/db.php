@@ -145,13 +145,12 @@ class DB
         $found = [];
         foreach($data as $k => $v)
         {
-            $sql = "SELECT * FROM users WHERE :k=:v";
+            $sql = "SELECT * FROM users WHERE username=:v OR email=:v";
 
             $result = $database->prepare($sql);
 
             $result->execute([
-                'k' => $k,
-                'v' => $v
+                'v' => strval($v)
             ]);
 
             //$result = $database->prepare("SELECT * FROM users WHERE $k='$v'");
