@@ -61,8 +61,6 @@ class DB
             'id' => $id
         ]);
 
-        //$result = $database->prepare("SELECT first_name, surname, username, id FROM users WHERE id != $id");
-
         $this->DBDisconnect($database);
         return $result->fetchAll();
     }

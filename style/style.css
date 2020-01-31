@@ -347,6 +347,12 @@ header {
   justify-content: center;
   align-items: center; }
 
+#formRecover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
 .hide {
   display: none; }
 
