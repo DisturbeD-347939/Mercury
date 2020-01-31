@@ -39,13 +39,12 @@ $result = $db->getFollows($_SESSION["user"]["id"]);
 
     <div>
         <h2>Create a post!</h2>
-        <form method="post" id="postFormFeed">
-            <p>Title</p>
+        <form method="post" id="postFormPost" enctype="multipart/form-data">
+            <label>Title</label>
             <input type="text" name="post[title]" required>
-            <p>Text</p>
-            <textarea name="post[content]" required></textarea>
-            <p></p>
-            <input type="submit" value="Post!">
+            <textarea name="post[content]" placeholder="Start your story today..." required></textarea>
+            <input type="file" name="post[pic]" id="postPic">
+            <input class="buttonStyle" type="submit" value="Post">
         </form>
     </div>
     <div id="feedPosts"></div>
