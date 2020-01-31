@@ -2,13 +2,12 @@
 
 class DB
 {
-
-    private $host           = '127.0.0.1';
+    private $host           = 'localhost';
     private $port           = '3306';
     private $db             = 'social_media';
     private $username       = 'root';
     private $password       =  null;
-    private $charset        = 'utf8mb4';
+    private $charset        = 'utf8';
     private $dsn;
 
     function DBConnect()
