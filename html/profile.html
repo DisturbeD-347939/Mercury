@@ -20,7 +20,7 @@ $result = $db->getPosts($_SESSION["user"]["id"]);
     <!-- JQuery script -->
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <!-- Gets the title from the users username -->
-    <title><?php echo $_SESSION['user']['username']?></title>
+    <title><?php echo $_SESSION['user']['first_name']; echo " "; echo $_SESSION['user']['surname'] ?></title>
 </head>
 
 <body id="bodyProfile">
