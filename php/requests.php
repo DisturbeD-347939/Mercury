@@ -239,9 +239,8 @@ if(@$_POST['register'])
             $_SESSION['id'] = $result[1];
             mkdir("../Users/" . $result[1]);
             copy('https://i.imgur.com/mCHMpLT.png?3', '../Users/' . $result[1] . '/profilePicture.png');
-            echo "Account created, log in with your details above!";
             $_POST = array();
-            include '../php/login_form.php';
+            header('Location: ../php/login_form.php');
         }
         else
         {
