@@ -244,13 +244,12 @@ if(@$_POST['register'])
         }
         else
         {
-            echo "Wrong query!";
+            header('Location: ../html/create_account.html');
         }
     }
     else
     {
-        echo "Existing!!";
-        include '../html/create_account.html';
+        header('Location: ../html/create_account.html');
     }
 }
 
@@ -286,7 +285,6 @@ else if(@$_POST['log_in'])
     }
     else
     {
-        echo "Incorrect details, try again!";
         header('Location: ../html/login_form.html');
     }
 }

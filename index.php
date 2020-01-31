@@ -9,6 +9,6 @@ include_once 'php/db.php';
 $db = new DB;
 
 
-Header('location: html/home.html') ;
+Header('location: ./html/home.html') ;
 
 ?>
