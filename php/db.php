@@ -482,6 +482,82 @@ class DB
 
         $this->DBDisconnect($database);
     }
+
+    //Delete from the database
+    function deleteAll($id)
+    {
+        $database = $this->DBConnect();
+
+        $sql = "DELETE FROM users WHERE id=:id";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'id' => $id, 
+        ]);
+
+
+        $sql = "DELETE FROM likes WHERE likeID=:id";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'id' => $id, 
+        ]);
+
+
+        $sql = "SELECT id FROM comments WHERE userID=:id";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'id' => $id, 
+        ]);
+
+        $postID = $result->fetchAll();
+
+        foreach($postID as $k => $v)
+        {
+            $sql = "DELETE FROM comments WHERE id=:id";
+
+            $result = $database->prepare($sql);
+
+            $result->execute([
+                'id' => $v["id"], 
+            ]);
+        }
+
+        $sql = "DELETE FROM comments WHERE userID=:id";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'id' => $id, 
+        ]);
+
+
+        $sql = "DELETE FROM posts WHERE userID=:id";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'id' => $id, 
+        ]);
+
+
+        $sql = "DELETE FROM follows WHERE userID=:id OR followerID=:id";
+
+        $result = $database->prepare($sql);
+
+        $result->execute([
+            'id' => $id, 
+        ]);
+
+
+        $this->DBDisconnect($database);
+        return $result;
+    }
+
 }
 
 ?>
