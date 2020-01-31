@@ -478,8 +478,6 @@ class DB
             'pass' => $pass
         ]);
 
-        var_dump($result);
-
         $this->DBDisconnect($database);
     }
 
