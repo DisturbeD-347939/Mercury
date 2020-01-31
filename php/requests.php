@@ -229,6 +229,10 @@ if(@$_POST['register'])
     $register['password'] = hash('sha256', $register['password']);
     if(!$db->repeated($register))
     {
+        foreach($result as $k)
+        {
+            $k = addslashes($k);
+        }
         $result = $db->add("users", $register);
         if($result[0])
         {
@@ -256,7 +260,7 @@ else if(@$_POST['post'])
 {
     $post = $_POST['post'];
 
-    $db->add("posts", array("content"=>$post['content'], "title"=>$post['title'], "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
+    $db->add("posts", array("content"=>addslashes($post['content']), "title"=>addslashes($post['title']), "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
 
     $result = $db->getPosts($_SESSION["user"]["id"]);
 
@@ -302,12 +306,7 @@ else if(@$_POST['likeID'] && @$_POST['postID'])
 
 else if(@$_POST['form'] && @$_POST['id'])
 {
-    $result = $db->add("comments", array("postID"=>$_POST['id'], "comment"=>$_POST['form'], "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
-}
-
-else if(@$_POST['form'] && @$_POST['id'])
-{
-    $result = $db->add("comments", array("postID"=>$_POST['id'], "comment"=>$_POST['form'], "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
+    $result = $db->add("comments", array("postID"=>$_POST['id'], "comment"=>addslashes($_POST['form']), "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
 }
 
 else if(@$_POST['hashtag'] && @$_POST['id'])
