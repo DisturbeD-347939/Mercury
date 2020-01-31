@@ -109,6 +109,7 @@ else if(@$_REQUEST["getPosts"])
     echo json_encode(array('result'=>$result));
 }
 
+//Get all the info from multiple ids
 else if(@$_REQUEST["getNames"])
 {
     $result = $db->getMultipleIDs($_REQUEST["getNames"]);
@@ -116,6 +117,7 @@ else if(@$_REQUEST["getNames"])
     echo json_encode(array('result'=>$result));
 }
 
+//Get profile picture
 else if(@$_REQUEST["getProfilePic"])
 {
     //Separate ids into an array
@@ -135,6 +137,7 @@ else if(@$_REQUEST["getProfilePic"])
     echo json_encode(array('result'=>$images));
 }
 
+//Get all the likes from a post
 else if(@$_REQUEST["getLikes"])
 {
     $result = $db->getLikes($_REQUEST["getLikes"]);
@@ -142,6 +145,7 @@ else if(@$_REQUEST["getLikes"])
     echo json_encode(array('result'=>$result));
 }
 
+//Get photos from posters
 else if(@$_REQUEST["getPhoto"])
 {
     $id = $_REQUEST["getPhoto"];
@@ -159,6 +163,7 @@ else if(@$_REQUEST["getPhoto"])
     echo $data;
 }
 
+//Get number of comments on a post
 else if(@$_REQUEST["getCommentsCount"])
 {
     $result = $db->getCommentsCount($_REQUEST["getCommentsCount"]);
@@ -166,6 +171,7 @@ else if(@$_REQUEST["getCommentsCount"])
     echo json_encode(array('result'=>$result));
 }
 
+//Get all comments from a post
 else if(@$_REQUEST["getComments"])
 {
     $result = $db->getComments($_REQUEST["getComments"]);
@@ -173,9 +179,9 @@ else if(@$_REQUEST["getComments"])
     echo json_encode(array('result'=>$result));
 }
 
+//Get user information from posts
 else if(@$_REQUEST["getPostNames"])
 {
-
     $getNames = $db->getMultipleIDs($_REQUEST["getPostNames"]);
 
     $i = array($_REQUEST["i"]);
@@ -185,6 +191,7 @@ else if(@$_REQUEST["getPostNames"])
     echo json_encode(array('result'=>$getNames));
 }
 
+//Get last post id
 else if(@$_REQUEST["getLastTextID"])
 {
     $result = $db->getLastTextID($_REQUEST["getLastTextID"]);
@@ -192,6 +199,7 @@ else if(@$_REQUEST["getLastTextID"])
     echo json_encode(array('result'=>$result));
 }
 
+//Get last post info
 else if(@$_REQUEST["getLastText"])
 {
     $result = $db->getLastText($_REQUEST["getLastText"]);
@@ -199,6 +207,7 @@ else if(@$_REQUEST["getLastText"])
     echo json_encode(array('result'=>$result));
 }
 
+//Get all posts with specific tag
 else if(@$_REQUEST["searchTag"])
 {
     $_SESSION["tag"] = $_REQUEST["searchTag"];
@@ -206,6 +215,7 @@ else if(@$_REQUEST["searchTag"])
     echo json_encode(array('result'=>1));
 }
 
+//Check if code matches
 else if(@$_REQUEST["resetCode"])
 {
     $result = $db->checkCode(strval($_REQUEST["resetCode"]));
@@ -289,6 +299,7 @@ else if(@$_POST['log_in'])
     }
 }
 
+//Delete or add likes
 else if(@$_POST['likeID'] && @$_POST['postID'])
 {
     if($_POST['delete'])
@@ -301,11 +312,13 @@ else if(@$_POST['likeID'] && @$_POST['postID'])
     }
 }
 
+//Add new comments
 else if(@$_POST['form'] && @$_POST['id'])
 {
     $result = $db->add("comments", array("postID"=>$_POST['id'], "comment"=>addslashes($_POST['form']), "userID"=>$_SESSION["user"]["id"], "timestamp"=>time()));
 }
 
+//Add new tags to a post
 else if(@$_POST['hashtag'] && @$_POST['id'])
 {
     $result = $db->addTags($_POST['hashtag'], $_POST['id']);
@@ -313,6 +326,7 @@ else if(@$_POST['hashtag'] && @$_POST['id'])
     echo json_encode(array('result'=>$result));
 }
 
+//Ask for a code for a forgotten password
 else if(@$_POST['forgot'])
 {
     $result = $db->checkEmail($_POST['forgot']);
@@ -340,6 +354,7 @@ else if(@$_POST['forgot'])
     
 }
 
+//Change password to a new one
 else if(@$_POST['recover'])
 {
     $result = $db->changePassword(hash('sha256', $_POST['recover']["password"]), $_POST['recover']["reset"]);

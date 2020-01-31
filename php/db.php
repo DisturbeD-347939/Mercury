@@ -2,6 +2,8 @@
 
 class DB
 {
+
+    //Database credentials
     private $host           = '91.103.219.224';
     private $port           = '3306';
     private $db             = 'webapps1_ricardo';
@@ -10,6 +12,7 @@ class DB
     private $charset        = 'utf8';
     private $dsn;
 
+    //Connect to the database
     function DBConnect()
     {
         $this->dsn = "mysql:host=$this->host;port=$this->port;dbname=$this->db;charset=$this->charset";
@@ -22,6 +25,7 @@ class DB
         return $pdo;
     }
 
+    //Disconnect from the database
     function DBDisconnect($database)
     {
         $database = null;
@@ -123,8 +127,6 @@ class DB
             'userID' => $userID,
         ]);
 
-        //$result = $database->prepare("SELECT * FROM posts WHERE userID='$userID'");
-
         $this->DBDisconnect($database);
 
         if ($result->rowCount()) 
@@ -153,7 +155,6 @@ class DB
                 'v' => strval($v)
             ]);
 
-            //$result = $database->prepare("SELECT * FROM users WHERE $k='$v'");
             if ($result->rowCount()) 
             {
                 if($k == "username" || $k == "email")
@@ -181,8 +182,6 @@ class DB
             'pass' => $pass
         ]);
 
-        //$result = $database->prepare("SELECT * FROM users WHERE email='$email' AND PASSWORD='$password'");
-
         $this->DBDisconnect($database);
         if ($result->rowCount()) 
         {
@@ -208,8 +207,6 @@ class DB
             'userID' => $userID
         ]);
 
-        //$result = $database->prepare("SELECT * FROM follows WHERE followerID='$followerID' AND userID='$userID'");
-
         $this->DBDisconnect($database);
         return $result->fetch();
     }
@@ -226,8 +223,6 @@ class DB
         $result->execute([
             'id' => $id
         ]);
-
-        //$result = $database->prepare("SELECT userID FROM follows WHERE followerID='$id'");
 
         $this->DBDisconnect($database);
         return $result->fetchAll();
@@ -248,12 +243,11 @@ class DB
 
         $result->execute($userIDs);
 
-        //$result = $database->prepare("SELECT * FROM posts WHERE userID IN ($userIDs)");
-
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
     }
 
+    //Get multiple users information based on different ids
     function getMultipleIDs($userIDs)
     {
         $userIDs = explode(",", $userIDs);
@@ -268,12 +262,11 @@ class DB
 
         $result->execute($userIDs);
 
-        //$result = $database->prepare("SELECT * FROM users WHERE id IN ($userIDs)");
-
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
     }
 
+    //Get likes from a post
     function getLikes($postID)
     {
         $database = $this->DBConnect();
@@ -286,12 +279,11 @@ class DB
             'postID' => $postID
         ]);
 
-        //$result = $database->prepare("SELECT * FROM likes WHERE postID='$postID'");
-
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
     }
 
+    //Get number of comments from a post
     function getCommentsCount($postID)
     {
         $database = $this->DBConnect();
@@ -304,12 +296,11 @@ class DB
             'postID' => $postID
         ]);
 
-        //$result = $database->prepare("SELECT COUNT(id) FROM comments WHERE postID='$postID'");
-
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
     }
 
+    //Get full comments from a post
     function getComments($postID)
     {
         $database = $this->DBConnect();
@@ -322,12 +313,11 @@ class DB
             'postID' => $postID
         ]);
 
-        //$result = $database->prepare("SELECT * FROM comments WHERE postID='$postID'");
-
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
     }
 
+    //Get last post ID
     function getLastTextID($userID)
     {
         $database = $this->DBConnect();
@@ -340,12 +330,11 @@ class DB
             'userID' => $userID
         ]);
 
-        //$result = $database->prepare("SELECT MAX(id) FROM posts WHERE userID='$userID'");
-
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
     }
 
+    //Get everything from a post on certain id
     function getLastText($id)
     {
         $database = $this->DBConnect();
@@ -358,12 +347,11 @@ class DB
             'id' => $id
         ]);
 
-        //$result = $database->prepare("SELECT * FROM posts WHERE id='$id'");
-
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
     }
 
+    //Add tags to the post
     function addTags($tags, $id)
     {
         $database = $this->DBConnect();
@@ -376,13 +364,11 @@ class DB
             'tags' => $tags,
             'id' => $id
         ]);
-        
-        //$result = $database->prepare("UPDATE posts SET hashtags='$tags' WHERE id='$id'");
     
         $this->DBDisconnect($database);
     }
 
-    //Get posts from a user
+    //Get posts from a user where there are hashtags
     function getTags()
     {
         $database = $this->DBConnect();
@@ -393,12 +379,11 @@ class DB
 
         $result->execute();
 
-        //$result = $database->prepare("SELECT * FROM posts WHERE hashtags IS NOT NULL");
-
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
     }
 
+    //Select the users email
     function checkEmail($email)
     {
         $database = $this->DBConnect();
@@ -410,13 +395,12 @@ class DB
         $result->execute([
             'email' => $email
         ]);
-        
-        //$result = $database->prepare("UPDATE posts SET hashtags='$tags' WHERE id='$id'");
 
         $this->DBDisconnect($database);
         return [$result->fetchAll()];
     }
 
+    //Update the code for password resetting
     function createReset($code, $email)
     {
         $database = $this->DBConnect();
@@ -433,6 +417,7 @@ class DB
         $this->DBDisconnect($database);
     }
 
+    //Check if the code matches a code in the database
     function checkCode($code)
     {
 
@@ -458,6 +443,7 @@ class DB
         }
     }
 
+    //Change password for a specific user with a specific code
     function changePassword($pass, $code)
     {
         $database = $this->DBConnect();
@@ -465,8 +451,6 @@ class DB
         $code = str_replace(' ', '', $code);
 
         $code = strval($code);
-
-        //$result = $database->query("UPDATE users SET password=$pass WHERE reset=$code");
 
         $sql = "UPDATE users SET password=:pass , reset=NULL WHERE reset=:code";
 
@@ -555,7 +539,8 @@ class DB
         return $result;
     }
 
-    function getUserAndComments($id) //INNER JOIN FUNCTION TO GET ALL THE USER INFO AND HIS COMMENTS
+    //INNER JOIN FUNCTION TO GET ALL THE USER INFO AND HIS COMMENTS
+    function getUserAndComments($id) 
     {
         $database = $this->DBConnect();
 

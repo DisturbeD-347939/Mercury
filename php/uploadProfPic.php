@@ -23,14 +23,12 @@ if(isset($_POST["submitPic"]))
 //Check if image is small enough
 if($_FILES["profilePicture"]["size"] > 500000)
 {
-    echo "Picture too large, max 50Mb";
     $upload = 0;
 }
 
 //Check if image is the right extension
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif")
 {
-    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
     $upload = 0;
 }
 
@@ -38,13 +36,17 @@ if ($upload != 0)
 {
     if (!move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $targetFile)) 
     {
-        echo "Sorry, there was an error uploading your file.";
+        header('Location: ../php/profile.php');
     }
     else
     {
         //Success uploading file
         header('Location: ../php/profile.php');
     }
+}
+else
+{
+    header('Location: ../php/profile.php');
 }
 
 ?>

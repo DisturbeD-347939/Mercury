@@ -89,7 +89,9 @@ function createPost(data, callback)
     }
     callback(timestamps);
 }
+
 /******************************************************** LIKES ***************************************************/
+//Like a post
 function like(id)
 {
     console.log("Liked " + id);
@@ -100,6 +102,7 @@ function like(id)
         data: {"postID": id, "likeID": profileID, "delete": 0},
         success: function(response)
         {
+            //Change the image and script
             $('#' + id + '> .like > img').attr("src", "../images/like.png");
             $('#' + id + '> .like').attr("onclick", "dislike(" + id + ")");
             checkLikes(id);
@@ -107,6 +110,7 @@ function like(id)
     })
 }
 
+//Same as function before but for dislikes
 function dislike(id)
 {
     console.log("Disliked " + id);
@@ -124,6 +128,7 @@ function dislike(id)
     })
 }
 
+//Check how many likes are in a post and display them
 function checkLikes(postID)
 {
     $.ajax
@@ -157,7 +162,7 @@ function checkLikes(postID)
 }
 
 /******************************************************** COMMENTS ***************************************************/
-
+//Gets the number of comments
 function checkComments(postID)
 {
     $.ajax
@@ -180,6 +185,7 @@ function checkComments(postID)
     })
 }
 
+//Shows all the comments
 function showComments(postID)
 {
     $.ajax
@@ -280,6 +286,7 @@ function showComments(postID)
     })
 }
 
+//Deletes a comment
 function deleteComment(id, postID)
 {
     $.ajax
@@ -302,6 +309,7 @@ function deleteComment(id, postID)
     });
 }
 
+//Hides all the comments again
 function hideComments(postID)
 {
     $('#' + postID + '> .like').css("border-bottom", "1px solid #DADDE1");
@@ -314,7 +322,7 @@ function hideComments(postID)
 
 /******************************************************** HASHTAGS ***************************************************/
 
-//Turn text into hashtags
+//Turn title text into hashtags
 function hashtagIt(location)
 {
     var titleContent = $(location).last().children('h3').text();
@@ -326,16 +334,19 @@ function hashtagIt(location)
         {
             if(hashtag != "")
             {
+                //Add new space for a hashtag
                 hashtag += " ";
             }
             while(titleContent[j] != " " && titleContent[j] != "\n" && titleContent.length > j && titleContent[j] != "undefined")
             { 
+                //Collect hashtag
                 hashtag += titleContent[j];
                 j++;
             }
         }
         if(titleContent.length == j && hashtag != "")
         {
+            //Display hashtags
             j = 9999;
             if(hashtag[hashtag.length-1] == " ") hashtag = hashtag.substring(0, hashtag.length - 1);
             if(hashtag.indexOf(" ") >= 0)
@@ -357,6 +368,7 @@ function hashtagIt(location)
     }
 }
 
+//Add hashtags to the database of the latest post
 function checkHashtags()
 {
     $.ajax

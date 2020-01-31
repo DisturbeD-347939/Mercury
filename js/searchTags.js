@@ -1,5 +1,6 @@
 setTimeout(compareTags(), 50);
 
+//Get posts with the same tag
 function compareTags()
 {
     tags = tags[0];
@@ -30,7 +31,6 @@ function compareTags()
         if(i+1 == tags.length)
         {
             postWithTags = postWithTags.substring(0, postWithTags.length - 1);
-            //console.log(postWithTags);
             getPosts(postWithTags, postWithTagsIDS, function(data)
             {
                 timestamps.reverse(timestamps.sort(sortFunction));
@@ -44,6 +44,7 @@ function compareTags()
     }
 }
 
+//Simply gets all posts
 function getPosts(userID, postID, callback)
 {
     var tempArray = [];

@@ -9,6 +9,7 @@ function run()
     var tempArray = {userID: profileID.toString()};
     ids.push(tempArray);
 
+    //Show the posts
     buildPosts(function(timestamps)
     {
         timestamps.reverse(timestamps.sort(sortFunction));
@@ -42,7 +43,6 @@ function buildPosts(callback)
 }
 
 
-
 //Get all userID's
 function parseIDs(ids, callback)
 {
@@ -61,29 +61,3 @@ function parseIDs(ids, callback)
     }
     callback(data);
 }
-
-//Create new post AJAX request
-/*$('#postFormFeed').submit(function(e)
-{
-    e.preventDefault();
-    $.ajax
-    ({
-        type: "POST",
-        url: "requests.php",
-        data: $(this).serialize(),
-        success: function(response)
-        {
-            checkHashtags();
-            $('#feedPosts').empty();
-            buildPosts(function(timestamps)
-            {
-                timestamps.reverse(timestamps.sort(sortFunction));
-                for(var i = 0; i < timestamps.length; i++)
-                {
-                    $('#feedPosts').append(timestamps[i][1]);
-                    hashtagIt('#feedPosts > div');
-                }
-            })
-        }
-    })
-});*/

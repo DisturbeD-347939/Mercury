@@ -1,3 +1,4 @@
+//Go to the profile that the user clicked on
 function goToProfile(id)
 {
     $.ajax
@@ -18,6 +19,7 @@ function goToProfile(id)
     });
 }
 
+//Get all the tags that the user clicked on
 function searchTag(tag)
 {
     $.ajax
@@ -92,6 +94,7 @@ $('#searchBoxInput').on('keyup', function(e)
     }
 });
 
+//Change all the special characters into html readable ones
 function escapeHtml(text) 
 {
     var map = {

@@ -42,6 +42,7 @@
 <script type="text/javascript">
     //Pass posts and searching status along with the searching userID and the person searching ID
     var posts = <?= json_encode($result) ?>;
+    //Searching for other profiles
     var searching = 1;
     var userID = <?= $_SESSION["searchProfile"]["id"] ?>;
     var followerID = <?= $_SESSION["user"]["id"] ?>;
