@@ -63,7 +63,7 @@ function parseIDs(ids, callback)
 }
 
 //Create new post AJAX request
-$('#postFormFeed').submit(function(e)
+/*$('#postFormFeed').submit(function(e)
 {
     e.preventDefault();
     $.ajax
@@ -86,4 +86,4 @@ $('#postFormFeed').submit(function(e)
             })
         }
     })
-});
+});*/
