@@ -11,8 +11,8 @@
 </head>
 
 <body id="login_form_body">
-    <div id="login_form">
-        <h1>Log in to Mercury</h1>
+    <div class="centerBox">
+        <h1 class="title">Log in to Mercury</h1 id="logoHome>
         <form action="../php/requests.php" method="POST">
             <div class="form-group">
                 <input name="log_in[email]" class="form-control" type="text" placeholder="Email" required> 
@@ -20,11 +20,10 @@
             <div class="form-group">
                 <input name="log_in[password]" class="form-control" type="password" placeholder="Password" required>
             </div>
-            <input type="submit" value="Log in">
+            <input class="buttonStyle" type="submit" value="Log in">
         </form>
-        <button onclick="window.location.href='../html/forgotten_password.html'">Forgot your password?</button>
-        <button onclick="window.location.href='../html/create_account.html'">Create an account</button>
-        <button onclick="window.location.href='../index.php'">Go back</button>
+        <button class="buttonStyle" id="forgotPasswordButton" onclick="window.location.href='../html/forgotten_password.html'">Forgot your password?</button>
+        <button class="buttonStyle" onclick="window.location.href='../html/create_account.html'">Create an account</button>
     </div>
 </body>
 
