@@ -365,23 +365,23 @@ class DB
         return [$result->fetchAll()];
     }
 
-    //function addTags($tags, $id)
-    //{
-    //    $database = $this->DBConnect();
-    //
-    //    $sql = "UPDATE posts SET hashtags=:tags WHERE id=:id";
-    //
-    //    $result = $database->prepare($sql);
-    //
-    //    $result->execute([
-    //        'tags' => $tags,
-    //        'id' => $id
-    //    ]);
-    //    
-    //    //$result = $database->prepare("UPDATE posts SET hashtags='$tags' WHERE id='$id'");
-    //
-    //    $this->DBDisconnect($database);
-    //}
+    function addTags($tags, $id)
+    {
+        $database = $this->DBConnect();
+    
+        $sql = "UPDATE posts SET hashtags=:tags WHERE id=:id";
+    
+        $result = $database->prepare($sql);
+    
+        $result->execute([
+            'tags' => $tags,
+            'id' => $id
+        ]);
+        
+        //$result = $database->prepare("UPDATE posts SET hashtags='$tags' WHERE id='$id'");
+    
+        $this->DBDisconnect($database);
+    }
 
     //Get posts from a user
     function getTags()
