@@ -10,6 +10,17 @@ This website was a project created for university using PHP, MySQL, Javascript, 
 It's **not finished**.
 
 ---
+## **Technologies used**
+Back-End:
+  1. PHP
+  2. MySQL
+  
+Front-end:
+  1. Javascript(JQuery)
+  2. SCSS
+  3. HTML
+
+---
 ## **Development Map**
 This is what steps I took to reach where the project is now:
 1. Learn about PHP and HTML requests methods.
